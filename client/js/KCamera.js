@@ -26,7 +26,16 @@ var KCamera = (function (_super) {
         if( diffLength > 0.1 )
         {
             diff.normalize();
-            var speed = Math.min(diffLength, 3);
+            var speed = 0.21;
+            if( diffLength < 0.21)
+            {
+                speed = diffLength;
+            }
+            else if( diffLength > 3)
+            {
+                speed = 0.07*diffLength;
+            }
+            
             var velocity = diff.scale(speed);
             var nextTarget = this.target.add(velocity);
             var nextPos = this.lastPosition.add(velocity);

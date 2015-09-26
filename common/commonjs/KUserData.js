@@ -1,6 +1,6 @@
-var KUserData = (function () 
+define(function () 
 { 
-    function KUserData(p_socketid, p_userID) 
+    var KUserData = function(p_socketid, p_userID)
     { 
         this.socketid = p_socketid;
         this.userID = p_userID;
@@ -23,6 +23,4 @@ var KUserData = (function ()
         this.mainActorID = p_other.mainActorID;
     }
     return KUserData;  
-})();
-
-module.exports = KUserData;
+});

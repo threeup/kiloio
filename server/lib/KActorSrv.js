@@ -1,6 +1,7 @@
 var SAT     = require('sat');
 var KSectorSrv = require('./KSectorSrv');
 var KActorData = require('./KActorData');
+var KInputData = require('./KInputData');
 var g_unit = 10; // 10 
 
 var KActorSrv = (function () 
@@ -10,6 +11,7 @@ var KActorSrv = (function ()
         var posX = p_circle.pos.x;
         var posY = p_circle.pos.y;
         this.actorData = new KActorData(p_userID, p_actorID, p_name, posX, posY );
+        this.inputData = new KInputData();
         this.circle = p_circle;
         this.sector = p_sector;
         this.sector.actorList.push(this);
@@ -27,8 +29,8 @@ var KActorSrv = (function ()
 
     KActorSrv.prototype.inputDesireMove = function(config)
     {
-        var velX = this.actorData.inputJoy.lsx;
-        var velY = this.actorData.inputJoy.lsy;
+        var velX = this.inputData.lsx;
+        var velY = this.inputData.lsy;
         var length = Math.sqrt(velX * velX + velY * velY);
 
         var speed = this.actorData.speed * config.baseMoveSpeed;
@@ -110,7 +112,7 @@ var KActorSrv = (function ()
         
         if( this.isCharging )
         {
-            if( this.actorData.inputJoy.p )
+            if( this.inputData.p )
             {
                 this.chargeTime += config.movePeriod;
             }
@@ -123,7 +125,7 @@ var KActorSrv = (function ()
         }
         else
         {
-            if( this.actorData.inputJoy.p )
+            if( this.inputData.p )
             {
                 this.isCharging = true;
                 this.isWeaponLeft = !this.isWeaponLeft;

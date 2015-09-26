@@ -15,27 +15,3 @@ var g_mouse = {x: 400, y: 400};
 var g_joy = {primary: false, secondary: false, up: 0, down:0, left:0, right:0};
 var g_unit = 10; // 10 
 
-
-function G_FindUser(arr, id) {
-  var len = arr.length;
-
-  while (len--) {
-      if (arr[len].userData.userID === id) {
-          return len;
-      }
-  }
-
-  return -1;
-}
-
-function G_FindActor(arr, id) {
-  var len = arr.length;
-
-  while (len--) {
-      if (arr[len].actorData.actorID === id) {
-          return len;
-      }
-  }
-
-  return -1;
-}

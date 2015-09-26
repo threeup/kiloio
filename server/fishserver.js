@@ -1,5 +1,25 @@
 var express = require('express');
 var app     = express();
+
+var requirejs = require('requirejs');
+
+// Boiler plate stuff - as per r.js's instructions
+requirejs.config({
+    paths: {
+        commonjs: '../common/commonjs'
+    },
+
+    //Pass the top-level main.js/index.js require
+    //function to requirejs so that node modules
+    //are loaded relative to the top-level JS file.
+    nodeRequire: require
+});
+
+/*requirejs(["commonjs/KActorData"], function(KActorData) {
+    var ad = new KActorData();
+    console.log(ad.userID);
+});*/
+
 var http    = require('http').Server(app);
 var io      = require('socket.io')(http);
 var SAT     = require('sat');
@@ -36,6 +56,7 @@ var g_unit = 10; // 10
 var nextWorlduserID = 10;
 var nextuserID = 100;
 app.use(express.static(__dirname + '/../client'));
+app.use(express.static(__dirname + '/../common'));
 
 var bufferCollider = null;
 var bufferCollisions = [];
@@ -130,11 +151,12 @@ io.on('connection', function (socket) {
     });
 
 	// Heartbeat function, update everytime
-    socket.on('0', function(inputJoy) {
+    socket.on('0', function(inputData) {
         user.lastHeartbeat = new Date().getTime();
         if( user.mainActor !== null )
         {
-        	user.mainActor.actorData.cloneInput(inputJoy);
+            
+        	user.mainActor.inputData.clone(inputData);
         }
         else
         {
