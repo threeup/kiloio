@@ -4,7 +4,7 @@
  *
  * Usage:
  * To create a new empty Quadtree, do this:
- * var tree = QUAD.init(args)
+ * var tree = quadtree.init(args)
  *
  * args = {
  *    // mandatory fields
@@ -27,12 +27,14 @@
  *
  * tree.clear() removes all items from the quadtree.
  */
+define(function (quadtree) 
+{ 
+    var quadtree = function()
+    {
 
-(function(window) {
+    }
 
-    var QUAD = {}; // global var for the quadtree
-
-    QUAD.init = function(args) {
+    quadtree.init = function(args) {
 
         var node;
         var TOP_LEFT     = 0;
@@ -234,6 +236,6 @@
         };
     };
 
-    window.QUAD = QUAD;
+    return quadtree;
 
-}(this));
+});

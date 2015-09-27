@@ -1,9 +1,9 @@
 define(function () 
 { 
-    var KUserData = function(p_socketid, p_userID)
+    var KUserData = function()
     { 
-        this.socketid = p_socketid;
-        this.userID = p_userID;
+        this.socketid = 0;
+        this.userID = 0;
         this.username = "-";
         this.homePosition = { x: 100, y: 100 };
         this.hue = Math.round(Math.random() * 360);

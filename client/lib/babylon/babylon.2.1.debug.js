@@ -15050,7 +15050,7 @@ var BABYLON;
          */
         Mesh.prototype.simplify = function (settings, parallelProcessing, simplificationType, successCallback) {
             if (parallelProcessing === void 0) { parallelProcessing = true; }
-            if (simplificationType === void 0) { simplificationType = BABYLON.SimplificationType.QUADRATIC; }
+            if (simplificationType === void 0) { simplificationType = BABYLON.SimplificationType.quadtreeRATIC; }
             this.getScene().simplificationQueue.addTask({
                 settings: settings,
                 parallelProcessing: parallelProcessing,
@@ -30239,7 +30239,7 @@ var BABYLON;
         };
         SimplificationQueue.prototype.getSimplifier = function (task) {
             switch (task.simplificationType) {
-                case SimplificationType.QUADRATIC:
+                case SimplificationType.quadtreeRATIC:
                 default:
                     return new QuadraticErrorSimplification(task.mesh);
             }
@@ -30252,7 +30252,7 @@ var BABYLON;
      * At the moment only Quadratic Error Decimation is implemented.
      */
     (function (SimplificationType) {
-        SimplificationType[SimplificationType["QUADRATIC"] = 0] = "QUADRATIC";
+        SimplificationType[SimplificationType["quadtreeRATIC"] = 0] = "quadtreeRATIC";
     })(BABYLON.SimplificationType || (BABYLON.SimplificationType = {}));
     var SimplificationType = BABYLON.SimplificationType;
     var DecimationTriangle = (function () {

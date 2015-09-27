@@ -1,9 +1,0 @@
-{
-	"port": 3000,
-    "gameWidth": 800,
-    "gameHeight": 800,
-    "networkUpdateFactor": 40,
-    "movePeriod": 100,
-    "baseMoveSpeed": 50,
-    "maxHeartbeatInterval": 5000
-}

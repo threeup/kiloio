@@ -8,34 +8,36 @@ requirejs.config({
     //never includes a ".js" extension since
     //the paths config could be for a directory.
     paths: {
-        clientjs: '/clientjs',
-        commonjs: '/commonjs'
+        clientjs: '../clientjs',
+        commonjs: '../commonjs'
     }
 });
 
 var game = null;
 
-require(["commonjs/KUserData", "clientjs/KUserCli", "commonjs/KActorData", "clientjs/KActorCli", "clientjs/KSectorCli", "clientjs/KWorldCli", "clientjs/KGame"], 
+requirejs(["commonjs/KUserData", "clientjs/KUserCli", "commonjs/KActorData", "clientjs/KActorCli", "clientjs/KSectorCli", "clientjs/KWorldCli", "clientjs/KGame"], 
     function(KUserData, KUserCli, KActorData, KActorCli, KSectorCli, KWorldCli, KGame) {
 
-    game = new KGame('abc');
+        game = new KGame('abc');
+        console.log('require game');
+        console.log(game);
+        doHandleKeyDown = function(key) {
+            game.handleKeyDown(key);
+        }
+        doHandleKeyUp = function(key) {
+            game.handleKeyUp(key);
+        }
 
-    doHandleKeyDown = function(key) {
-        game.handleKeyDown(key);
-    }
-    doHandleKeyUp = function(key) {
-        game.handleKeyUp(key);
-    }
-
-    checkNick = function() {
-        // check if the nick is valid
-        if (validNick()) {
-            startGame();
-        } else {
-            nickErrorText.style.display = 'inline';
+        checkNick = function() {
+            // check if the nick is valid
+            if (validNick()) {
+                startGame();
+            } else {
+                nickErrorText.style.display = 'inline';
+            }
         }
     }
-});
+);
 
 
 var socket;

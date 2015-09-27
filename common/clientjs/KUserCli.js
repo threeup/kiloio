@@ -3,7 +3,7 @@ define(["commonjs/KUserData", "clientjs/KActorCli"],
 {
   var KUserCli = function()
   { 
-    this.userData = new KUserData(0, 0);
+    this.userData = new KUserData();
     this.actors = [];
     this.mainActor = null;
   }

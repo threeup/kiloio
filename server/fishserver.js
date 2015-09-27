@@ -1,12 +1,18 @@
 var express = require('express');
 var app     = express();
 
+var http    = require('http').Server(app);
+var io      = require('socket.io')(http);
 var requirejs = require('requirejs');
 
 // Boiler plate stuff - as per r.js's instructions
 requirejs.config({
     paths: {
-        commonjs: '../common/commonjs'
+        commonjs: '../common/commonjs',
+        serverjs: './serverjs',
+        libjs: './lib',
+        text: './lib/text',
+        json: './lib/json'
     },
 
     //Pass the top-level main.js/index.js require
@@ -15,162 +21,158 @@ requirejs.config({
     nodeRequire: require
 });
 
-/*requirejs(["commonjs/KActorData"], function(KActorData) {
-    var ad = new KActorData();
-    console.log(ad.userID);
-});*/
-
-var http    = require('http').Server(app);
-var io      = require('socket.io')(http);
-var SAT     = require('sat');
-
-var config  = require('./config.json');
-
-// Import utilities
-var util = require('./lib/util');
-
-// Import quadtree
-var quadtree= require('./lib/quadtree');
-var KWorld = require('./lib/KWorld');
-var KSectorSrv = require('./lib/KSectorSrv');
-var KActorData = require('./lib/KActorData');
-var KActorSrv = require('./lib/KActorSrv');
-var KUserData = require('./lib/KUserData');
-var KUserSrv = require('./lib/KUserSrv');
-
-var treeargs = {
-	x: 0, 
-	y: 0, 
-	h: config.gameHeight, 
-	w: config.gameWidth, 
-	maxChildren: 1, 
-	maxDepth: 5
-};
 
 
-var g_world = new KWorld(2);
+
+var config  = requirejs('json!libjs/config.json');
+var treeargs = null;
+
+var g_world = null;;
 var g_users = [];
 var g_actors = [];
 var g_sockets = {};
 var g_unit = 10; // 10 
 var nextWorlduserID = 10;
 var nextuserID = 100;
+
+var worldUser = null;
+var bufferCollider = null;
+var bufferCollisions = [];
+var serverPort = 0;
+
+
 app.use(express.static(__dirname + '/../client'));
 app.use(express.static(__dirname + '/../common'));
 
-var bufferCollider = null;
-var bufferCollisions = [];
+function gameStart(KWorld, KUserSrv, KUtil)
+{
+    treeargs = {
+        x: 0, 
+        y: 0, 
+        h: config.gameHeight, 
+        w: config.gameWidth, 
+        maxChildren: 1, 
+        maxDepth: 5
+    };
+    g_world = new KWorld(2);
+    worldUser = new KUserSrv(0,nextWorlduserID);
+    worldUser.userData.homePosition.x = 0;
+    worldUser.userData.homePosition.y = 0;
+    g_users.push(worldUser);
 
+    socketStart(KUserSrv, KUtil);        
+    setInterval(moveLoop, config.movePeriod);
+    setInterval(tickLoop, 1000 / 60);
+    setInterval(sendUpdates, 1000 / config.networkUpdateFactor);
+    setInterval(sendReport, 1000*10);
 
-var worldUser = new KUserSrv(0,nextWorlduserID);
-worldUser.userData.homePosition.x = 0;
-worldUser.userData.homePosition.y = 0;
-g_users.push(worldUser);
+}
 
+function socketStart(KUserSrv, KUtil)
+{
 
+    io.on('connection', function (socket) {
+    	console.log("Socket setup start");
+    	
 
-
-
-io.on('connection', function (socket) {
-	console.log("Socket setup start");
-	
-
-	var user = new KUserSrv(socket.id, nextuserID);
-    
-	nextuserID = nextuserID + 1;
-
-	user.lastHeartbeat = new Date().getTime();
-
-	socket.on('c-userLaunch', function (populatedUserData) {
-        console.log('Connection ' + populatedUserData.socketid + ' connecting');
-
-        if (util.findIndex(g_users, populatedUserData.socketid) > -1) {
-            console.log('That userID is already connected, kicking');
-            socket.disconnect();
-        } else if (!util.validNick(populatedUserData.username)) {
-            socket.emit('s-kick', 'Invalid username');
-            socket.disconnect();
-        } else {
-            user.userData.clone(populatedUserData);
-            console.log('Connection ' + user.userData.socketid + ' connected');
-            g_sockets[user.userData.socketid] = socket;
-
-            sendAddPacketsToSocket(user.userData.socketid);
-            console.log('Sent first data to ' + user.userData.socketid);
-
-            user.lastHeartbeat = new Date().getTime();
-            io.emit('s-addUserData', user.userData );
-            user.commandQueue.push('s');
-            user.commandQueue.push('s');
-        	g_users.push(user);
-
-            console.log('Total users: ' + g_users.length);
-        }
-
-    });
-	socket.on('c-ping', function () {
-        socket.emit('s-pong');
-    });
-
-    socket.on('windowResized', function (data) {
-        user.screenWidth = data.screenWidth;
-        user.screenHeight = data.screenHeight;
-    });
-
-    socket.on('c-requestSector', function (sectorData) {
+    	var user = new KUserSrv(socket.id, nextuserID);
         
-        console.log('requested sector');
-        console.log(sectorData);
+    	nextuserID = nextuserID + 1;
 
-        var sector = g_world.getSectorSecPos(sectorData.x,sectorData.y);
-        socket.emit('s-addSectorData', {
-            secX: sector.secX,
-            secY: sector.secY,
-            seed: sector.seed,
-            groundData: sector.groundList
+    	user.lastHeartbeat = new Date().getTime();
+
+    	socket.on('c-userLaunch', function (populatedUserData) {
+            console.log('Connection ' + populatedUserData.socketid + ' connecting');
+
+            if (KUtil.findIndex(g_users, populatedUserData.socketid) > -1) {
+                console.log('That userID is already connected, kicking');
+                socket.disconnect();
+            } else if (!KUtil.validNick(populatedUserData.username)) {
+                socket.emit('s-kick', 'Invalid username');
+                socket.disconnect();
+            } else {
+                user.userData.clone(populatedUserData);
+                console.log('Connection ' + user.userData.socketid + ' connected');
+                g_sockets[user.userData.socketid] = socket;
+
+                sendAddPacketsToSocket(user.userData.socketid);
+                console.log('Sent first data to ' + user.userData.socketid);
+
+                user.lastHeartbeat = new Date().getTime();
+                io.emit('s-addUserData', user.userData );
+                user.commandQueue.push('s');
+                user.commandQueue.push('s');
+            	g_users.push(user);
+
+                console.log('Total users: ' + g_users.length);
+            }
+
         });
-    });
-
-    socket.on('c-spawn', function () {
-    	if (util.findIndex(g_users, user.userData.socketid) > -1)
-            g_users.splice(util.findIndex(g_users, user.userData.socketid), 1);
-        socket.emit('s-localPopulate', user.userData);
-        socket.emit('s-gameSetup', {
-            gameWidth: config.gameWidth,
-            gameHeight: config.gameHeight
+    	socket.on('c-ping', function () {
+            socket.emit('s-pong');
         });
-        console.log('Connection ' + user.userData.socketid + ' initialized');
-    });
 
-    socket.on('disconnect', function () {
-        if (util.findIndex(g_users, user.userData.socketid) > -1)
-            g_users.splice(util.findIndex(g_users, user.userData.socketid), 1);
-        console.log('Connection' + user.userData.socketid + ' disconnected');
+        socket.on('windowResized', function (data) {
+            user.screenWidth = data.screenWidth;
+            user.screenHeight = data.screenHeight;
+        });
 
-        socket.broadcast.emit('playerDisconnect', { name: user.userData.username });
-    });
-
-	// Heartbeat function, update everytime
-    socket.on('0', function(inputData) {
-        user.lastHeartbeat = new Date().getTime();
-        if( user.mainActor !== null )
-        {
+        socket.on('c-requestSector', function (sectorData) {
             
-        	user.mainActor.inputData.clone(inputData);
-        }
-        else
-        {
-            console.log('missing main actor');
-            console.log(user);
-        }
-    });
-    console.log('Socket setup finish');
-});
+            console.log('requested sector');
+            console.log(sectorData);
 
-var serverPort = process.env.PORT || config.port;
-http.listen(serverPort, function() {
-  console.log("Server is listening on port " + serverPort);
-});
+            var sector = g_world.getSectorSecPos(sectorData.x,sectorData.y);
+            socket.emit('s-addSectorData', {
+                secX: sector.secX,
+                secY: sector.secY,
+                seed: sector.seed,
+                groundData: sector.groundList
+            });
+        });
+
+        socket.on('c-spawn', function () {
+        	if (KUtil.findIndex(g_users, user.userData.socketid) > -1)
+                g_users.splice(KUtil.findIndex(g_users, user.userData.socketid), 1);
+            socket.emit('s-localPopulate', user.userData);
+            socket.emit('s-gameSetup', {
+                gameWidth: config.gameWidth,
+                gameHeight: config.gameHeight
+            });
+            console.log('Connection ' + user.userData.socketid + ' initialized');
+        });
+
+        socket.on('disconnect', function () {
+            if (KUtil.findIndex(g_users, user.userData.socketid) > -1)
+                g_users.splice(KUtil.findIndex(g_users, user.userData.socketid), 1);
+            console.log('Connection' + user.userData.socketid + ' disconnected');
+
+            socket.broadcast.emit('playerDisconnect', { name: user.userData.username });
+        });
+
+    	// Heartbeat function, update everytime
+        socket.on('0', function(inputData) {
+            user.lastHeartbeat = new Date().getTime();
+            if( user.mainActor !== null )
+            {
+                
+            	user.mainActor.inputData.clone(inputData);
+            }
+            else
+            {
+                console.log('missing main actor');
+                console.log(user);
+            }
+        });
+        console.log('Socket setup finish');
+    });
+    serverPort = process.env.PORT || config.port;
+    http.listen(serverPort, function() {
+      console.log("Server is listening on port " + serverPort);
+    });
+
+}
+
 
 
 function sendAddPacketsToSocket(socketid)
@@ -249,17 +251,22 @@ function tickLoop() {
         while(user.commandQueue.length > 0)
         {
             var command = user.commandQueue.pop();
-            var sector = g_world.getSectorRealPos(
-                user.userData.homePosition.x, 
-                user.userData.homePosition.y);
-            var actor = user.makeActor(sector);
-            if( user.mainActor === null )
+            if(command === 's')
             {
-                user.selectActor(actor);
-            }
-            g_actors.push(actor);
 
-            io.emit('s-addActorData', actor.actorData );
+                var sector = g_world.getSectorRealPos(
+                    user.userData.homePosition.x, 
+                    user.userData.homePosition.y);
+
+                var actor = user.makeActor(sector);
+                if( user.mainActor === null )
+                {
+                    user.selectActor(actor);
+                }
+                g_actors.push(actor);
+
+                io.emit('s-addActorData', actor.actorData );
+            }
         }
     }
 
@@ -305,9 +312,8 @@ function sendReport() {
     });;*/
 }
 
-
-
-setInterval(moveLoop, config.movePeriod);
-setInterval(tickLoop, 1000 / 60);
-setInterval(sendUpdates, 1000 / config.networkUpdateFactor);
-setInterval(sendReport, 1000*10);
+requirejs(["serverjs/KWorld", "serverjs/KUserSrv", "serverjs/KUtil"], 
+    function(KWorld, KUserSrv, KUtil) {
+        gameStart(KWorld, KUserSrv, KUtil);
+    }
+);

@@ -7,6 +7,7 @@ define(function ()
         this.actorname = "-";
         this.position = { x: 0, y: 0 };
         this.velocity = { x: 0, y: 0 };
+        this.lastVelocity = { x: 0, y: 0 };
         this.actorState = 0;
         this.speed = 0.4;
         this.momentum = 0.2;
