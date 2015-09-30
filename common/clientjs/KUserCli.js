@@ -1,4 +1,4 @@
-define(["commonjs/KUserData", "clientjs/KActorCli"], 
+define(["common/KUserData", "client/KActorCli"], 
   function (KUserData, KActorCli) 
 {
   var KUserCli = function()

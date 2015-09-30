@@ -36,10 +36,58 @@ define(function ()
         return str.substr(0,index) + chr + str.substr(index+1);
     }
 
+
+    var findUser = function(arr, id) {
+        var len = arr.length;
+
+        while (len--) {
+            if (arr[len].userData.userID === id) {
+                return len;
+            }
+        }
+
+        return -1;
+    }
+
+    var findActor = function(arr, id) {
+        var len = arr.length;
+
+        while (len--) {
+            if (arr[len].actorData.actorID === id) {
+                return len;
+            }
+        }
+
+        return -1;
+    }
+
+    var findIndex = function(arr, id) {
+        var len = arr.length;
+
+        while (len--) {
+            if (arr[len].id === id) {
+                return len;
+            }
+        }
+
+        return -1;
+    }
+    var removeNumber = function(arr, id) {
+        for(var i = arr.length; i--;) {
+            if(arr[i] === id) {
+                arr.splice(i, 1);
+            }
+        }
+
+        return -1;
+    }
     return {
         validNick:validNick, 
         findIndex:findIndex, 
         randomColor:randomColor, 
-        setCharAt:setCharAt
+        setCharAt:setCharAt,
+        findUser:findUser,
+        findActor:findActor,
+        findIndex:findIndex
     }
 });

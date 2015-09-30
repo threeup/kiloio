@@ -12,6 +12,7 @@ define(function ()
         this.speed = 0.4;
         this.momentum = 0.2;
         this.mass = 1.0;
+        this.ttl = -1;
     }
 
     KActorData.prototype.clone = function(p_other)
@@ -25,6 +26,7 @@ define(function ()
         this.speed = p_other.speed;
         this.momentum = p_other.momentum;
         this.mass = p_other.mass;
+        this.ttl = p_other.ttl;
     }
 
     return KActorData;  

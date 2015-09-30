@@ -1,4 +1,4 @@
-define(["commonjs/KActorData","commonjs/KInputData", "serverjs/KSectorSrv"], 
+define(["common/KActorData","common/KInputData", "server/KSectorSrv"], 
     function (KActorData,KInputData, KSectorSrv) 
 { 
     var SAT     = require('sat');
@@ -10,7 +10,7 @@ define(["commonjs/KActorData","commonjs/KInputData", "serverjs/KSectorSrv"],
         this.actorData = new KActorData();
         this.actorData.userID = p_userID;
         this.actorData.actorID = p_actorID;
-        this.actorData.acotrname = p_name;
+        this.actorData.actorname = p_name;
         this.actorData.position.x = posX;
         this.actorData.position.y = posY;
         this.inputData = new KInputData();
@@ -40,11 +40,9 @@ define(["commonjs/KActorData","commonjs/KInputData", "serverjs/KSectorSrv"],
             velX = velX/length * speed;
             velY = velY/length * speed;
 
-            this.actorData.velocity.x += velX * config.movePeriod / 1000;
-            this.actorData.velocity.y += velY * config.movePeriod / 1000;
+            this.actorData.velocity.x += velX * config.turnLength / 1000;
+            this.actorData.velocity.y += velY * config.turnLength / 1000;
         }
-
-
     }
 
     KActorSrv.prototype.finishDesireMove = function()
@@ -108,18 +106,18 @@ define(["commonjs/KActorData","commonjs/KInputData", "serverjs/KSectorSrv"],
     }
 
 
-    KActorSrv.prototype.doAbilities = function(config)
+    KActorSrv.prototype.doAbilities = function(config, world)
     {
         
         if( this.isCharging )
         {
             if( this.inputData.p )
             {
-                this.chargeTime += config.movePeriod;
+                this.chargeTime += config.turnLength;
             }
             else
             {
-                this.doShoot(this.isWeaponLeft, this.chargeTime);
+                world.doShoot(this, this.isWeaponLeft, this.chargeTime);
                 this.isCharging = false;
                 this.chargeTime = 0;
             }
@@ -130,22 +128,12 @@ define(["commonjs/KActorData","commonjs/KInputData", "serverjs/KSectorSrv"],
             {
                 this.isCharging = true;
                 this.isWeaponLeft = !this.isWeaponLeft;
-                this.doPunch(this.isWeaponLeft);
+                world.doPunch(this, this.isWeaponLeft);
             }
         }
 
         
     }
 
-    KActorSrv.prototype.doPunch = function(leftHand)
-    {
-        console.log('punch');
-    }
-
-    KActorSrv.prototype.doShoot = function(leftHand, chargeTime)
-    {
-        console.log('shoot');
-        console.log(chargeTime);
-    }
     return KActorSrv;  
 });

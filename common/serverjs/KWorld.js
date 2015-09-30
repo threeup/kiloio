@@ -1,5 +1,5 @@
-define(["serverjs/KSectorSrv"], 
-    function (KSectorSrv) 
+define(["server/KSectorSrv", "common/KUtil"], 
+    function (KSectorSrv, KUtil) 
 { 
     var KWorld = function(seed)
     {
@@ -10,6 +10,8 @@ define(["serverjs/KSectorSrv"],
         this.sectorUnit = 32; //32 units
         this.worldRadius = 5; //5 sectors
         this.sectors = [];
+        this.users = [];
+        this.actors = [];
         for(var i = -this.worldRadius; i <= this.worldRadius; ++i)
         {
             var sectorRow = [];
@@ -20,6 +22,7 @@ define(["serverjs/KSectorSrv"],
             }
             this.sectors.push(sectorRow);
         }
+        this.worldUser = null;
     }
 
     KWorld.prototype.getRealFromSecPos = function(v)
@@ -65,6 +68,93 @@ define(["serverjs/KSectorSrv"],
         return this.getSectorSecPos( 
             Math.round((x/this.tileUnit)/this.sectorUnit), 
             Math.round((y/this.tileUnit)/this.sectorUnit));
+    }
+
+    KWorld.prototype.tickLoop = function(config, io, sockets)
+    {
+        for (var i = 0; i < this.users.length; i++) {
+            var user = this.users[i];
+            while(user.commandQueue.length > 0)
+            {
+                var command = user.commandQueue.pop();
+                if(command === 's')
+                {
+                    var sector = this.getSectorRealPos(
+                        user.userData.homePosition.x, 
+                        user.userData.homePosition.y);
+
+                    var actor = user.makeHeroActor(sector);
+                    if( user.mainActor === null )
+                    {
+                        user.selectActor(actor);
+                    }
+                    this.actors.push(actor);
+
+                    io.emit('s-addActorData', actor.actorData );
+                }
+            }
+            if(user.lastHeartbeat < new Date().getTime() - config.maxHeartbeatInterval) 
+            {
+                var userData = user.userData;
+                if( userData.socketid > 0 )
+                {
+                    sockets[userData.socketid].emit('s-kick', 'Last heartbeat received over ' + config.maxHeartbeatInterval + ' ago.');
+                    sockets[userData.socketid].disconnect();
+                }
+            }
+        }
+    }
+
+
+    KWorld.prototype.turnLoop = function(config)
+    {
+        var world = this;
+        this.sectors.forEach( function(sectorRow)
+        { 
+            sectorRow.forEach( function(sector)
+            { 
+                sector.turnStart();
+            });
+        });
+        this.actors.forEach( function(actor)
+        {
+            actor.momentumDesireMove(config);
+            actor.inputDesireMove(config);
+            actor.finishDesireMove(config);
+        });
+        this.actors.forEach( function(actor)
+        {
+            actor.attemptMove(config);
+        });
+        this.actors.forEach( function(actor)
+        {
+            actor.applyMove(config);
+            actor.doAbilities(config, world);
+        });
+        this.sectors.forEach( function(sectorRow)
+        { 
+            sectorRow.forEach( function(sector)
+            { 
+                sector.turnEnd();
+            });
+        });
+    }
+
+    KWorld.prototype.doPunch = function(heroActor, leftHand)
+    {
+        var uidx = KUtil.findUser(this.users, heroActor.actorData.userID);
+        var user = this.users[uidx];
+        var punch = user.makeItemActor(heroActor, {x:1, y:1})
+        console.log('punch');
+    }
+
+    KWorld.prototype.doShoot = function(heroActor, leftHand, chargeTime)
+    {
+        var uidx = KUtil.findUser(this.users, heroActor.actorData.userID);
+        var user = this.users[uidx];
+        var bullet = user.makeItemActor(heroActor, {x:1, y:1})
+        console.log('shoot');
+        console.log(chargeTime);
     }
 
     KWorld.prototype.getLine = function(seed, row)
@@ -121,7 +211,6 @@ define(["serverjs/KSectorSrv"],
             line = line.slice(0,25)+"PPPP"+line.slice(29,32);
         }*/
         return line;
-
     }
     return KWorld;  
 });

@@ -1,6 +1,6 @@
 
-define(["clientjs/KWorldCli", "clientjs/KSectorCli", "clientjs/KUserCli", "clientjs/KActorCli"], 
-  function (KWorldCli, KSectorCli, KUserCli, KActorCli) 
+define(["client/KWorldCli", "client/KSectorCli", "client/KUserCli", "client/KActorCli", "common/KUtil"], 
+  function (KWorldCli, KSectorCli, KUserCli, KActorCli, KUtil) 
 { 
   var KGame = function(p_gamename)
   {
@@ -222,7 +222,7 @@ define(["clientjs/KWorldCli", "clientjs/KSectorCli", "clientjs/KUserCli", "clien
         game.rcvAddActor(actorData);
       });
     socket.on('s-updateUserData', function (userData) {
-        var idx = G_FindUser(game.users, userData.userID);
+        var idx = KUtil.findUser(game.users, userData.userID);
         if( idx < 0 )
         {
           //console.log(idx);
@@ -236,7 +236,7 @@ define(["clientjs/KWorldCli", "clientjs/KSectorCli", "clientjs/KUserCli", "clien
         
       });
     socket.on('s-updateActorData', function (actorData) {
-        var idx = G_FindActor(game.actors, actorData.actorID);
+        var idx = KUtil.findActor(game.actors, actorData.actorID);
         if( idx < 0 )
         {
           //console.log(idx);
@@ -260,7 +260,7 @@ define(["clientjs/KWorldCli", "clientjs/KSectorCli", "clientjs/KUserCli", "clien
   }
   KGame.prototype.rcvAddUser = function(p_userData)
   {
-    var uidx = G_FindUser(game.users, p_userData.userID);
+    var uidx = KUtil.findUser(game.users, p_userData.userID);
     var user = null;
     if( uidx < 0 )
     {
@@ -289,7 +289,7 @@ define(["clientjs/KWorldCli", "clientjs/KSectorCli", "clientjs/KUserCli", "clien
 
   KGame.prototype.rcvAddActor = function(p_actorData)
   {
-    var aidx = G_FindActor(game.actors, p_actorData.actorID);
+    var aidx = KUtil.findActor(game.actors, p_actorData.actorID);
     var actor = null;
     if( aidx < 0 )
     {
@@ -305,7 +305,7 @@ define(["clientjs/KWorldCli", "clientjs/KSectorCli", "clientjs/KUserCli", "clien
       this.actors[aidx] = actor;
     }
     
-    var uidx = G_FindUser(game.users, p_actorData.userID);
+    var uidx = KUtil.findUser(game.users, p_actorData.userID);
     if( uidx < 0 )
     {
       console.log('rcvAddActor missing user');
@@ -423,6 +423,14 @@ define(["clientjs/KWorldCli", "clientjs/KSectorCli", "clientjs/KUserCli", "clien
       localInput.s = g_joy.secondary;
 
       this.localUser.mainActor.armlight.setEnabled(g_joy.primary);
+      
+    }
+  }
+
+  KGame.prototype.handleTurnFinished = function()
+  {
+    if( this.localUser !== null )
+    {
       this.localUser.clientTransmit();
     }
   }

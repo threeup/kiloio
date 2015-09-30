@@ -1,4 +1,4 @@
-define(["clientjs/KActorCli"], 
+define(["client/KActorCli"], 
 	function (KActorCli) 
 { 
     var KSectorCli = function(secX, secY)

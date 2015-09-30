@@ -520,10 +520,44 @@
 	"buffers":
 	[
 		{
-			"file": "client/index.html",
+			"file": "common/serverjs/KItemSrv.js",
 			"settings":
 			{
-				"buffer_size": 1131,
+				"buffer_size": 1052,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"contents": "Searching 42 files for \"new kactorsrv\"\n\n\\\\STRAWBERRY\\Code\\kiloio\\common\\serverjs\\KUserSrv.js:\n   31  \n   32          var circle = new SAT.Circle(new SAT.Vector(posX, posY), g_unit*0.4);\n   33:         var actor = new KActorSrv(userData.userID, actorID, shortName+actorID, circle, p_sector);\n   34          this.actors.push(actor.actorID);\n   35          this.userData.actorIDs.push(actor.actorID);\n\n1 match in 1 file\n\n\nSearching 42 files for \"actorIDs\"\n\n\\\\STRAWBERRY\\Code\\kiloio\\common\\commonjs\\KUserData.js:\n    9          this.hue = Math.round(Math.random() * 360);\n   10  \n   11:         this.actorIDs = [];\n   12          this.mainActorID = -1;\n   13      }\n   ..\n   20          this.homePosition = p_other.homePosition;\n   21          this.hue = p_other.hue;\n   22:         this.actorIDs = p_other.actorIDs.slice(0);\n   23          this.mainActorID = p_other.mainActorID;\n   24      }\n\n\\\\STRAWBERRY\\Code\\kiloio\\common\\serverjs\\KUserSrv.js:\n   34          var actor = new KActorSrv(userData.userID, actorID, shortName+actorID, circle, p_sector);\n   35          this.actors.push(actor.actorID);\n   36:         this.userData.actorIDs.push(actor.actorID);\n   37          return actor;\n   38      }\n   ..\n   47          var actor = new KActorSrv(userData.userID, actorID, shortName+actorID, circle, p_sector);\n   48          this.actors.push(actor.actorID);\n   49:         this.userData.actorIDs.push(actor.actorID);\n   50          return actor;\n   51      }\n\n5 matches across 2 files\n\n\nSearching 42 files for \"makeac\"\n\n\\\\STRAWBERRY\\Code\\kiloio\\server\\fishserver.js:\n  251                      user.userData.homePosition.y);\n  252  \n  253:                 var actor = user.makeActor(sector);\n  254                  if( user.mainActor === null )\n  255                  {\n\n1 match in 1 file\n",
+			"settings":
+			{
+				"buffer_size": 1789,
+				"line_ending": "Windows",
+				"name": "Find Results",
+				"scratch": true
+			}
+		},
+		{
+			"file": "common/serverjs/KUserSrv.js",
+			"settings":
+			{
+				"buffer_size": 2424,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "common/commonjs/KUserData.js",
+			"settings":
+			{
+				"buffer_size": 701,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "common/serverjs/KWorld.js",
+			"settings":
+			{
+				"buffer_size": 3911,
 				"line_ending": "Unix"
 			}
 		},
@@ -531,138 +565,24 @@
 			"file": "server/fishserver.js",
 			"settings":
 			{
-				"buffer_size": 8213,
+				"buffer_size": 8677,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "common/commonjs/KActorData.js",
+			"file": "common/serverjs/KActorSrv.js",
 			"settings":
 			{
-				"buffer_size": 901,
+				"buffer_size": 4362,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "common/clientjs/KGame.js",
+			"file": "common/commonjs/KUtil.js",
 			"settings":
 			{
-				"buffer_size": 13224,
+				"buffer_size": 2202,
 				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "common/commonjs/KInputData.js",
-			"settings":
-			{
-				"buffer_size": 745,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"contents": "Searching 41 files for \"handleKeyUp\"\n\n\\\\STRAWBERRY\\Code\\kiloio\\client\\js\\prep.js:\n    8  var checkNick = function() { console.log('checkNick'); }\n    9  var doHandleKeyDown = function(key) { }\n   10: var doHandleKeyUp = function(key) { }\n   11  \n   12  window.onload = function() {\n   ..\n   45      function(event){\n   46          var key = event.which || event.keyCode;\n   47:         doHandleKeyUp(key);\n   48      }\n   49  );\n\n\\\\STRAWBERRY\\Code\\kiloio\\common\\clientjs\\KGame.js:\n  323    }\n  324  \n  325:   KGame.prototype.handleKeyUp = function(key)\n  326    {\n  327      console.log(key);\n\n<untitled 46>:\n  151      function(event){\n  152          var key = event.which || event.keyCode;\n  153:         game.handleKeyUp(key);\n  154      }\n  155  );\n\n4 matches across 3 files\n\n\nSearching 41 files for \"doHandleKeyDown\"\n\n\\\\STRAWBERRY\\Code\\kiloio\\client\\js\\app.js:\n   21      game = new KGame('abc');\n   22  \n   23:     doHandleKeyDown = function(key) {\n   24          game.handleKeyDown(key);\n   25      }\n\n\\\\STRAWBERRY\\Code\\kiloio\\client\\js\\prep.js:\n    7  \n    8  var checkNick = function() { console.log('checkNick'); }\n    9: var doHandleKeyDown = function(key) { }\n   10  var doHandleKeyUp = function(key) { }\n   11  \n   ..\n   39      function(event){\n   40          var key = event.which || event.keyCode;\n   41:         doHandleKeyDown(key);\n   42      }\n   43  );\n\n3 matches across 2 files\n\n\nSearching 41 files for \"setSoftTarget\"\n\n\\\\STRAWBERRY\\Code\\kiloio\\client\\js\\KCamera.js:\n   15      };\n   16  \n   17:     KCamera.prototype.setSoftTarget = function (softTarget) {\n   18          this.softTarget = softTarget;\n   19      };\n\n\\\\STRAWBERRY\\Code\\kiloio\\common\\clientjs\\KGame.js:\n  113        this.swSphere.material = this.defaultMat;\n  114  \n  115:       this.camera.setSoftTarget(this.cameraAnchor);\n  116  \n  117        var pick = function () {\n\n2 matches across 2 files\n\n\nSearching 42 files for \"inputjoy\"\n\n\\\\STRAWBERRY\\Code\\kiloio\\common\\clientjs\\KActorCli.js:\n  131      KActorCli.prototype.renderTick = function()\n  132      {\n  133:         var yawTorso = Math.atan2(-this.actorData.inputJoy.rfy, this.actorData.inputJoy.rfx);\n  134:         var yawHips = Math.atan2(-this.actorData.inputJoy.lfy, this.actorData.inputJoy.lfx);\n  135:         //console.log(this.actorData.inputJoy.rfy+','+this.actorData.inputJoy.rfx);\n  136          this.torsobone.rotationQuaternion = BABYLON.Quaternion.RotationYawPitchRoll(yawTorso, 0, 0);\n  137          this.hipsbone.rotationQuaternion = BABYLON.Quaternion.RotationYawPitchRoll(yawHips, 0, 0);\n\n\\\\STRAWBERRY\\Code\\kiloio\\common\\clientjs\\KGame.js:\n  397      {\n  398        var localActorData = this.localUser.mainActor.actorData;\n  399:       //this.localUser.mainActor.actorData.inputJoy.x = g_joy.x;\n  400        var lsx = g_joy.right - g_joy.left;\n  401        var lsy = g_joy.up - g_joy.down;\n  ...\n  403        if ( lslen > 0.1 )\n  404        {\n  405:         localActorData.inputJoy.lfx = lsx;\n  406:         localActorData.inputJoy.lfy = lsy;\n  407        }\n  408        \n  409:       localActorData.inputJoy.lsx = lsx;\n  410:       localActorData.inputJoy.lsy = lsy;\n  411        var rsx = this.localCursor.position.x - localActorData.position.x;\n  412        var rsy = this.localCursor.position.z - localActorData.position.y;\n  ...\n  414        if( rslensq > 0.1 )\n  415        {\n  416:         localActorData.inputJoy.rfx = rsx;\n  417:         localActorData.inputJoy.rfy = rsy;\n  418        }\n  419        var rslen = Math.min(1, Math.sqrt(rslensq) );\n  420:       localActorData.inputJoy.rsx = rsx/rslen;\n  421:       localActorData.inputJoy.rsy = rsy/rslen;\n  422:       localActorData.inputJoy.p = g_joy.primary;\n  423:       localActorData.inputJoy.s = g_joy.secondary;\n  424  \n  425        this.localUser.mainActor.armlight.setEnabled(g_joy.primary);\n\n\\\\STRAWBERRY\\Code\\kiloio\\common\\clientjs\\KUserCli.js:\n   38      {\n   39        \n   40:       socket.emit('0', this.mainActor.actorData.inputJoy);\n   41      }\n   42    }\n\n\\\\STRAWBERRY\\Code\\kiloio\\common\\commonjs\\KInputData.js:\n   15      }\n   16  \n   17:     KInputData.prototype.clone = function(p_inputJoy)\n   18      {\n   19:         this.lfx = p_inputJoy.lfx;\n   20:         this.lfy = p_inputJoy.lfy;\n   21:         this.lsx = p_inputJoy.lsx;\n   22:         this.lsy = p_inputJoy.lsy;\n   23:         this.rfx = p_inputJoy.rfx;\n   24:         this.rfy = p_inputJoy.rfy;\n   25:         this.rsx = p_inputJoy.rsx;\n   26:         this.rsy = p_inputJoy.rsy;\n   27:         this.p   = p_inputJoy.p; \n   28:         this.s   = p_inputJoy.s;\n   29      }\n   30  \n\n\\\\STRAWBERRY\\Code\\kiloio\\server\\fishserver.js:\n  152  \n  153  	// Heartbeat function, update everytime\n  154:     socket.on('0', function(inputJoy) {\n  155          user.lastHeartbeat = new Date().getTime();\n  156          if( user.mainActor !== null )\n  157          {\n  158              \n  159:         	user.mainActor.actorData.cloneInput(inputJoy);\n  160          }\n  161          else\n\n\\\\STRAWBERRY\\Code\\kiloio\\server\\lib\\KActorData.js:\n    6          this.actorID = p_actorID;\n    7          this.actorname = p_name;\n    8:         this.inputJoy = { lsx: 0, lsy: 0, rsx: 0, rsy: 0, p:0, s:0 };\n    9          this.position = { x: p_x, y: p_y };\n   10          this.velocity = { x: 0, y: 0 };\n   ..\n   15      }\n   16  \n   17:     KActorData.prototype.cloneInput = function(p_inputJoy)\n   18      {\n   19:         this.inputJoy = { \n   20:             lsx: p_inputJoy.lsx, \n   21:             lsy: p_inputJoy.lsy, \n   22:             rsx: p_inputJoy.rsx, \n   23:             rsy: p_inputJoy.rsy, \n   24:             p:   p_inputJoy.p, \n   25:             s:   p_inputJoy.s };\n   26      }\n   27  \n   ..\n   31          this.actorID = p_other.actorID;\n   32          this.actorname = p_other.actorname;\n   33:         this.cloneInput(p_other.inputJoy);\n   34          this.position = { x: p_other.position.x, y: p_other.position.y };\n   35          this.velocity = { x: p_other.velocity.x, y: p_other.velocity.y };\n\n\\\\STRAWBERRY\\Code\\kiloio\\server\\lib\\KActorSrv.js:\n   28      KActorSrv.prototype.inputDesireMove = function(config)\n   29      {\n   30:         var velX = this.actorData.inputJoy.lsx;\n   31:         var velY = this.actorData.inputJoy.lsy;\n   32          var length = Math.sqrt(velX * velX + velY * velY);\n   33  \n   ..\n  111          if( this.isCharging )\n  112          {\n  113:             if( this.actorData.inputJoy.p )\n  114              {\n  115                  this.chargeTime += config.movePeriod;\n  ...\n  124          else\n  125          {\n  126:             if( this.actorData.inputJoy.p )\n  127              {\n  128                  this.isCharging = true;\n\n45 matches across 7 files\n\n\nSearching 42 files for \"inputjoy\"\n\n\\\\STRAWBERRY\\Code\\kiloio\\common\\clientjs\\KGame.js:\n  397      {\n  398        var localActorData = this.localUser.mainActor.actorData;\n  399:       //this.localUser.mainActor.actorData.inputJoy.x = g_joy.x;\n  400        var lsx = g_joy.right - g_joy.left;\n  401        var lsy = g_joy.up - g_joy.down;\n  ...\n  403        if ( lslen > 0.1 )\n  404        {\n  405:         localActorData.inputJoy.lfx = lsx;\n  406:         localActorData.inputJoy.lfy = lsy;\n  407        }\n  408        \n  409:       localActorData.inputJoy.lsx = lsx;\n  410:       localActorData.inputJoy.lsy = lsy;\n  411        var rsx = this.localCursor.position.x - localActorData.position.x;\n  412        var rsy = this.localCursor.position.z - localActorData.position.y;\n  ...\n  414        if( rslensq > 0.1 )\n  415        {\n  416:         localActorData.inputJoy.rfx = rsx;\n  417:         localActorData.inputJoy.rfy = rsy;\n  418        }\n  419        var rslen = Math.min(1, Math.sqrt(rslensq) );\n  420:       localActorData.inputJoy.rsx = rsx/rslen;\n  421:       localActorData.inputJoy.rsy = rsy/rslen;\n  422:       localActorData.inputJoy.p = g_joy.primary;\n  423:       localActorData.inputJoy.s = g_joy.secondary;\n  424  \n  425        this.localUser.mainActor.armlight.setEnabled(g_joy.primary);\n\n\\\\STRAWBERRY\\Code\\kiloio\\common\\commonjs\\KInputData.js:\n   15      }\n   16  \n   17:     KInputData.prototype.clone = function(p_inputJoy)\n   18      {\n   19:         this.lfx = p_inputJoy.lfx;\n   20:         this.lfy = p_inputJoy.lfy;\n   21:         this.lsx = p_inputJoy.lsx;\n   22:         this.lsy = p_inputJoy.lsy;\n   23:         this.rfx = p_inputJoy.rfx;\n   24:         this.rfy = p_inputJoy.rfy;\n   25:         this.rsx = p_inputJoy.rsx;\n   26:         this.rsy = p_inputJoy.rsy;\n   27:         this.p   = p_inputJoy.p; \n   28:         this.s   = p_inputJoy.s;\n   29      }\n   30  \n\n\\\\STRAWBERRY\\Code\\kiloio\\server\\fishserver.js:\n  152  \n  153  	// Heartbeat function, update everytime\n  154:     socket.on('0', function(inputJoy) {\n  155          user.lastHeartbeat = new Date().getTime();\n  156          if( user.mainActor !== null )\n  157          {\n  158              \n  159:         	user.mainActor.actorData.cloneInput(inputJoy);\n  160          }\n  161          else\n\n\\\\STRAWBERRY\\Code\\kiloio\\server\\lib\\KActorData.js:\n    6          this.actorID = p_actorID;\n    7          this.actorname = p_name;\n    8:         this.inputJoy = { lsx: 0, lsy: 0, rsx: 0, rsy: 0, p:0, s:0 };\n    9          this.position = { x: p_x, y: p_y };\n   10          this.velocity = { x: 0, y: 0 };\n   ..\n   15      }\n   16  \n   17:     KActorData.prototype.cloneInput = function(p_inputJoy)\n   18      {\n   19:         this.inputJoy = { \n   20:             lsx: p_inputJoy.lsx, \n   21:             lsy: p_inputJoy.lsy, \n   22:             rsx: p_inputJoy.rsx, \n   23:             rsy: p_inputJoy.rsy, \n   24:             p:   p_inputJoy.p, \n   25:             s:   p_inputJoy.s };\n   26      }\n   27  \n   ..\n   31          this.actorID = p_other.actorID;\n   32          this.actorname = p_other.actorname;\n   33:         this.cloneInput(p_other.inputJoy);\n   34          this.position = { x: p_other.position.x, y: p_other.position.y };\n   35          this.velocity = { x: p_other.velocity.x, y: p_other.velocity.y };\n\n\\\\STRAWBERRY\\Code\\kiloio\\server\\lib\\KActorSrv.js:\n   28      KActorSrv.prototype.inputDesireMove = function(config)\n   29      {\n   30:         var velX = this.actorData.inputJoy.lsx;\n   31:         var velY = this.actorData.inputJoy.lsy;\n   32          var length = Math.sqrt(velX * velX + velY * velY);\n   33  \n   ..\n  111          if( this.isCharging )\n  112          {\n  113:             if( this.actorData.inputJoy.p )\n  114              {\n  115                  this.chargeTime += config.movePeriod;\n  ...\n  124          else\n  125          {\n  126:             if( this.actorData.inputJoy.p )\n  127              {\n  128                  this.isCharging = true;\n\n38 matches across 5 files\n\n\nSearching 42 files for \"inputjoy\"\n\n\\\\STRAWBERRY\\Code\\kiloio\\common\\commonjs\\KInputData.js:\n   15      }\n   16  \n   17:     KInputData.prototype.clone = function(p_inputJoy)\n   18      {\n   19:         this.lfx = p_inputJoy.lfx;\n   20:         this.lfy = p_inputJoy.lfy;\n   21:         this.lsx = p_inputJoy.lsx;\n   22:         this.lsy = p_inputJoy.lsy;\n   23:         this.rfx = p_inputJoy.rfx;\n   24:         this.rfy = p_inputJoy.rfy;\n   25:         this.rsx = p_inputJoy.rsx;\n   26:         this.rsy = p_inputJoy.rsy;\n   27:         this.p   = p_inputJoy.p; \n   28:         this.s   = p_inputJoy.s;\n   29      }\n   30  \n\n\\\\STRAWBERRY\\Code\\kiloio\\server\\fishserver.js:\n  152  \n  153  	// Heartbeat function, update everytime\n  154:     socket.on('0', function(inputJoy) {\n  155          user.lastHeartbeat = new Date().getTime();\n  156          if( user.mainActor !== null )\n  157          {\n  158              \n  159:         	user.mainActor.actorData.cloneInput(inputJoy);\n  160          }\n  161          else\n\n\\\\STRAWBERRY\\Code\\kiloio\\server\\lib\\KActorData.js:\n    6          this.actorID = p_actorID;\n    7          this.actorname = p_name;\n    8:         this.inputJoy = { lsx: 0, lsy: 0, rsx: 0, rsy: 0, p:0, s:0 };\n    9          this.position = { x: p_x, y: p_y };\n   10          this.velocity = { x: 0, y: 0 };\n   ..\n   15      }\n   16  \n   17:     KActorData.prototype.cloneInput = function(p_inputJoy)\n   18      {\n   19:         this.inputJoy = { \n   20:             lsx: p_inputJoy.lsx, \n   21:             lsy: p_inputJoy.lsy, \n   22:             rsx: p_inputJoy.rsx, \n   23:             rsy: p_inputJoy.rsy, \n   24:             p:   p_inputJoy.p, \n   25:             s:   p_inputJoy.s };\n   26      }\n   27  \n   ..\n   31          this.actorID = p_other.actorID;\n   32          this.actorname = p_other.actorname;\n   33:         this.cloneInput(p_other.inputJoy);\n   34          this.position = { x: p_other.position.x, y: p_other.position.y };\n   35          this.velocity = { x: p_other.velocity.x, y: p_other.velocity.y };\n\n\\\\STRAWBERRY\\Code\\kiloio\\server\\lib\\KActorSrv.js:\n   28      KActorSrv.prototype.inputDesireMove = function(config)\n   29      {\n   30:         var velX = this.actorData.inputJoy.lsx;\n   31:         var velY = this.actorData.inputJoy.lsy;\n   32          var length = Math.sqrt(velX * velX + velY * velY);\n   33  \n   ..\n  111          if( this.isCharging )\n  112          {\n  113:             if( this.actorData.inputJoy.p )\n  114              {\n  115                  this.chargeTime += config.movePeriod;\n  ...\n  124          else\n  125          {\n  126:             if( this.actorData.inputJoy.p )\n  127              {\n  128                  this.isCharging = true;\n\n27 matches across 4 files\n\n\nSearching 42 files for \"inputjoy\"\n\n\\\\STRAWBERRY\\Code\\kiloio\\server\\fishserver.js:\n  152  \n  153  	// Heartbeat function, update everytime\n  154:     socket.on('0', function(inputJoy) {\n  155          user.lastHeartbeat = new Date().getTime();\n  156          if( user.mainActor !== null )\n  157          {\n  158              \n  159:         	user.mainActor.actorData.cloneInput(inputJoy);\n  160          }\n  161          else\n\n\\\\STRAWBERRY\\Code\\kiloio\\server\\lib\\KActorData.js:\n    6          this.actorID = p_actorID;\n    7          this.actorname = p_name;\n    8:         this.inputJoy = { lsx: 0, lsy: 0, rsx: 0, rsy: 0, p:0, s:0 };\n    9          this.position = { x: p_x, y: p_y };\n   10          this.velocity = { x: 0, y: 0 };\n   ..\n   15      }\n   16  \n   17:     KActorData.prototype.cloneInput = function(p_inputJoy)\n   18      {\n   19:         this.inputJoy = { \n   20:             lsx: p_inputJoy.lsx, \n   21:             lsy: p_inputJoy.lsy, \n   22:             rsx: p_inputJoy.rsx, \n   23:             rsy: p_inputJoy.rsy, \n   24:             p:   p_inputJoy.p, \n   25:             s:   p_inputJoy.s };\n   26      }\n   27  \n   ..\n   31          this.actorID = p_other.actorID;\n   32          this.actorname = p_other.actorname;\n   33:         this.cloneInput(p_other.inputJoy);\n   34          this.position = { x: p_other.position.x, y: p_other.position.y };\n   35          this.velocity = { x: p_other.velocity.x, y: p_other.velocity.y };\n\n\\\\STRAWBERRY\\Code\\kiloio\\server\\lib\\KActorSrv.js:\n   28      KActorSrv.prototype.inputDesireMove = function(config)\n   29      {\n   30:         var velX = this.actorData.inputJoy.lsx;\n   31:         var velY = this.actorData.inputJoy.lsy;\n   32          var length = Math.sqrt(velX * velX + velY * velY);\n   33  \n   ..\n  111          if( this.isCharging )\n  112          {\n  113:             if( this.actorData.inputJoy.p )\n  114              {\n  115                  this.chargeTime += config.movePeriod;\n  ...\n  124          else\n  125          {\n  126:             if( this.actorData.inputJoy.p )\n  127              {\n  128                  this.isCharging = true;\n\n16 matches across 3 files\n\n\nSearching 42 files for \"inputjoy\"\n\n\\\\STRAWBERRY\\Code\\kiloio\\server\\lib\\KActorData.js:\n    6          this.actorID = p_actorID;\n    7          this.actorname = p_name;\n    8:         this.inputJoy = { lsx: 0, lsy: 0, rsx: 0, rsy: 0, p:0, s:0 };\n    9          this.position = { x: p_x, y: p_y };\n   10          this.velocity = { x: 0, y: 0 };\n   ..\n   15      }\n   16  \n   17:     KActorData.prototype.cloneInput = function(p_inputJoy)\n   18      {\n   19:         this.inputJoy = { \n   20:             lsx: p_inputJoy.lsx, \n   21:             lsy: p_inputJoy.lsy, \n   22:             rsx: p_inputJoy.rsx, \n   23:             rsy: p_inputJoy.rsy, \n   24:             p:   p_inputJoy.p, \n   25:             s:   p_inputJoy.s };\n   26      }\n   27  \n   ..\n   31          this.actorID = p_other.actorID;\n   32          this.actorname = p_other.actorname;\n   33:         this.cloneInput(p_other.inputJoy);\n   34          this.position = { x: p_other.position.x, y: p_other.position.y };\n   35          this.velocity = { x: p_other.velocity.x, y: p_other.velocity.y };\n\n10 matches in 1 file\n\n\nSearching 43 files for \"KActorData\"\n\n\\\\STRAWBERRY\\Code\\kiloio\\client\\js\\app.js:\n   16  var game = null;\n   17  \n   18: require([\"commonjs/KUserData\", \"clientjs/KUserCli\", \"commonjs/KActorData\", \"clientjs/KActorCli\", \"clientjs/KSectorCli\", \"clientjs/KWorldCli\", \"clientjs/KGame\"], \n   19:     function(KUserData, KUserCli, KActorData, KActorCli, KSectorCli, KWorldCli, KGame) {\n   20  \n   21      game = new KGame('abc');\n\n\\\\STRAWBERRY\\Code\\kiloio\\common\\clientjs\\KActorCli.js:\n    1: define([\"commonjs/KActorData\",\"commonjs/KInputData\"], \n    2:     function (KActorData,KInputData) \n    3  { \n    4      var KActorCli = function()\n    5      { \n    6:         this.actorData = new KActorData();\n    7          this.inputData = new KInputData();\n    8          this.torso = null;\n\n\\\\STRAWBERRY\\Code\\kiloio\\common\\commonjs\\KActorData.js:\n    1  define(function () \n    2  { \n    3:     var KActorData = function()\n    4      { \n    5          this.userID = 0;\n    .\n   14      }\n   15  \n   16:     KActorData.prototype.clone = function(p_other)\n   17      {\n   18          this.userID = p_other.userID;\n   ..\n   27      }\n   28  \n   29:     return KActorData;  \n   30  });\n   31  \n\n\\\\STRAWBERRY\\Code\\kiloio\\server\\fishserver.js:\n   16  });\n   17  \n   18: /*requirejs([\"commonjs/KActorData\"], function(KActorData) {\n   19:     var ad = new KActorData();\n   20      console.log(ad.userID);\n   21  });*/\n   ..\n   34  var KWorld = require('./lib/KWorld');\n   35  var KSectorSrv = require('./lib/KSectorSrv');\n   36: var KActorData = require('./lib/KActorData');\n   37  var KActorSrv = require('./lib/KActorSrv');\n   38  var KUserData = require('./lib/KUserData');\n\n\\\\STRAWBERRY\\Code\\kiloio\\server\\lib\\KActorData.js:\n    1: var KActorData = (function () \n    2  { \n    3:     function KActorData(p_userID, p_actorID, p_name, p_x, p_y) \n    4      { \n    5          this.userID = p_userID;\n    .\n   15      }\n   16  \n   17:     KActorData.prototype.cloneInput = function(p_inputJoy)\n   18      {\n   19          this.inputJoy = { \n   ..\n   26      }\n   27  \n   28:     KActorData.prototype.clone = function(p_other)\n   29      {\n   30          this.userID = p_other.userID;\n   ..\n   40      }\n   41  \n   42:     return KActorData;  \n   43  })();\n   44  \n   45  \n   46  \n   47: module.exports = KActorData;\n\n\\\\STRAWBERRY\\Code\\kiloio\\server\\lib\\KActorSrv.js:\n    1  var SAT     = require('sat');\n    2  var KSectorSrv = require('./KSectorSrv');\n    3: var KActorData = require('./KActorData');\n    4  var g_unit = 10; // 10 \n    5  \n    .\n   10          var posX = p_circle.pos.x;\n   11          var posY = p_circle.pos.y;\n   12:         this.actorData = new KActorData(p_userID, p_actorID, p_name, posX, posY );\n   13          this.inputData = new KInputData();\n   14          this.circle = p_circle;\n\n22 matches across 6 files\n",
-			"settings":
-			{
-				"buffer_size": 19512,
-				"line_ending": "Windows",
-				"name": "Find Results",
-				"scratch": true
-			}
-		},
-		{
-			"file": "/I/w/ClickThink/ClickThink/AIBrain.cs",
-			"settings":
-			{
-				"buffer_size": 4573,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "/I/w/ClickThink/ClickThink/ActionInterface.cs",
-			"settings":
-			{
-				"buffer_size": 13494,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "/I/w/ClickThink/ClickThink/GameActor.cs",
-			"settings":
-			{
-				"buffer_size": 3200,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "server/lib/KInputData.js",
-			"settings":
-			{
-				"buffer_size": 779,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "server/lib/KActorData.js",
-			"settings":
-			{
-				"buffer_size": 1426,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "server/lib/KActorSrv.js",
-			"settings":
-			{
-				"buffer_size": 4419,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "common/clientjs/KActorCli.js",
-			"settings":
-			{
-				"buffer_size": 5622,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "common/clientjs/KUserCli.js",
-			"settings":
-			{
-				"buffer_size": 872,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "client/js/KCamera.js",
-			"settings":
-			{
-				"buffer_size": 8022,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "client/js/app.js",
-			"settings":
-			{
-				"buffer_size": 3053,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "client/js/prep.js",
-			"settings":
-			{
-				"buffer_size": 1601,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"contents": "\nvar socket;\nvar localUserName;\n\nvar playerNameInput = document.getElementById('playerNameInput');\n\n\nvar reenviar = true;\n\nvar startPingTime = 0;\n\n\nvar game = new KGame(\"KGame\");\n\nfunction startGame() {\n    localUserName = playerNameInput.value.replace(/(<([^>]+)>)/ig, '');\n    //document.getElementById('gameAreaWrapper').style.display = 'block';\n    document.getElementById('startMenuWrapper').style.display = 'none';\n    socket = io();\n    game.createCore();\n    game.createCamera();\n    game.createWorld();\n\n    game.engine.runRenderLoop(function () {\n        game.scene.render();\n    });\n\n    // Resize\n    window.addEventListener(\"resize\", function () {\n        game.engine.resize();\n    });\n    \n    setupAppSocket(socket);\n    \n    \n    socket.emit('c-spawn');\n    animloop();\n}\n\n// check if nick is valid alphanumeric characters (and underscores)\nfunction validNick() {\n    var regex = /^\\w*$/;\n    console.log('Regex Test', regex.exec(playerNameInput.value));\n    return regex.exec(playerNameInput.value) !== null;\n}\n\nwindow.onload = function() {\n    'use strict';\n\n    var btn = document.getElementById('startButton'),\n        nickErrorText = document.querySelector('#startMenu .input-error');\n\n    btn.onclick = function () {\n\n        // check if the nick is valid\n        if (validNick()) {\n            startGame();\n        } else {\n            nickErrorText.style.display = 'inline';\n        }\n    };\n\n    playerNameInput.addEventListener('keypress', function (e) {\n        var key = e.which || e.keyCode;\n\n        if (key === KEY_ENTER) {\n            if (validNick()) {\n                startGame();\n            } else {\n                nickErrorText.style.display = 'inline';\n            }\n        }\n    });\n};\n\nfunction sendPing()\n{\n    startPingTime = Date.now();\n    socket.emit('c-ping');\n}\n\n    \nfunction setupAppSocket(socket) \n{\n    console.log(\"Socket setup start\");\n        // Handle ping\n    socket.on('s-pong', function () {\n        var latency = Date.now() - startPingTime;\n        console.log('Latency: ' + latency + 'ms');\n    });\n\n    // Handle error\n    socket.on('connect_failed', function () {\n        socket.close();\n        disconnected = true;\n    });\n\n\n    socket.on('s-kick', function () {\n        console.log('kicked');\n        \n    });\n\n    socket.on('disconnect', function () {\n        socket.close();\n        disconnected = true;\n    });\n\n    socket.on('s-gameSetup', function(data) {\n        gameWidth = data.gameWidth;\n        gameHeight = data.gameHeight;\n    });\n    \n\n    game.setupGameSocket(socket);\n    console.log(\"Socket setup finish\");\n}\n\nfunction gameInput(mouse) \n{\n    game.handleMouseInput(mouse);\n}\n\nfunction outOfBounds() \n{\n    //var mouse = { x : 0, y: 0 };\n    //game.handleMouseInput(mouse);\n}\n\nfunction keyInput(event) \n{\n    var key = event.which || event.keyCode;\n    if(reenviar) \n    {\n        game.handleKeyInput(key);\n    }\n}\n\nwindow.addEventListener(\"contextmenu\", function (evt)\n{\n    evt.preventDefault();\n});\n\nwindow.addEventListener('keydown',\n    function(event){\n        var key = event.which || event.keyCode;\n        game.handleKeyDown(key);\n    }\n);\nwindow.addEventListener('keyup',\n    function(event){\n        var key = event.which || event.keyCode;\n        game.handleKeyUp(key);\n    }\n);\n\nwindow.requestAnimFrame = (function(){\n    return  window.requestAnimationFrame       ||\n            window.webkitRequestAnimationFrame ||\n            window.mozRequestAnimationFrame    ||\n            function( callback ){\n                window.setTimeout(callback, 1000 / 60);\n            };\n})();\n\nfunction animloop(){\n    requestAnimFrame(animloop);\n    gameLoop();\n}\n\nfunction gameLoop() {\n    game.handleLogic();\n    game.handleGraphics();\n}",
-			"settings":
-			{
-				"buffer_size": 3721,
-				"line_ending": "Windows"
 			}
 		}
 	],
@@ -707,36 +627,64 @@
 		"//STRAWBERRY/Code/kiloio/client",
 		"//STRAWBERRY/Code/kiloio/client/css",
 		"//STRAWBERRY/Code/kiloio/client/js",
-		"//STRAWBERRY/Code/kiloio/client/lib",
 		"//STRAWBERRY/Code/kiloio/common",
 		"//STRAWBERRY/Code/kiloio/common/clientjs",
+		"//STRAWBERRY/Code/kiloio/common/clientlib",
 		"//STRAWBERRY/Code/kiloio/common/commonjs",
-		"//STRAWBERRY/Code/kiloio/server",
-		"//STRAWBERRY/Code/kiloio/server/lib"
+		"//STRAWBERRY/Code/kiloio/common/serverjs",
+		"//STRAWBERRY/Code/kiloio/common/serverlib",
+		"//STRAWBERRY/Code/kiloio/server"
 	],
 	"file_history":
 	[
+		"//STRAWBERRY/Code/kiloio/common/commonjs/KActorData.js",
+		"//STRAWBERRY/Code/kiloio/common/clientjs/KActorCli.js",
+		"//STRAWBERRY/Code/kiloio/common/commonjs/KUserData.js",
+		"//STRAWBERRY/Code/kiloio/server/fishserver.js",
+		"//STRAWBERRY/Code/kiloio/server/config.json",
+		"//STRAWBERRY/Code/kiloio/client/index.html",
+		"//STRAWBERRY/Code/kiloio/common/clientjs/KGame.js",
+		"//STRAWBERRY/Code/kiloio/common/clientjs/KSectorCli.js",
+		"//STRAWBERRY/Code/kiloio/client/js/app.js",
+		"//STRAWBERRY/Code/kiloio/common/commonlib/json.js",
+		"//STRAWBERRY/Code/kiloio/client/js/prep.js",
+		"//STRAWBERRY/Code/kiloio/common/serverjs/KSectorSrv.js",
+		"//STRAWBERRY/Code/kiloio/common/serverjs/KUserSrv.js",
+		"//STRAWBERRY/Code/kiloio/common/serverjs/KWorld.js",
+		"//STRAWBERRY/Code/kiloio/common/clientjs/KUserCli.js",
+		"//STRAWBERRY/Code/kiloio/common/clientjs/KWorldCli.js",
+		"//STRAWBERRY/Code/kiloio/common/clientlib/longrequire.js",
+		"//STRAWBERRY/Code/kiloio/server/serverjs/KUtil.js",
+		"//STRAWBERRY/Code/kiloio/server/serverjs/KUserSrv.js",
+		"//STRAWBERRY/Code/kiloio/client/clientlib/require.js",
+		"//STRAWBERRY/Code/kiloio/client/clientlib/longrequire.js",
+		"//STRAWBERRY/Code/kiloio/server/serverjs/KActorSrv.js",
+		"//STRAWBERRY/Code/kiloio/server/serverjs/KSectorSrv.js",
+		"//STRAWBERRY/Code/kiloio/server/lib/require.js",
+		"//STRAWBERRY/Code/kiloio/server/lib/quadtree.js",
+		"//STRAWBERRY/Code/kiloio/client/lib/babylon/babylon.2.1.debug.js",
+		"//STRAWBERRY/Code/kiloio/client/lib/babylon/babylon.2.1.js",
+		"//STRAWBERRY/Code/kiloio/client/lib/babylon/babylon.2.1.noworker.js",
+		"//STRAWBERRY/Code/kiloio/server/lib/text.js",
+		"//STRAWBERRY/Code/kiloio/server/lib/config.json",
+		"//STRAWBERRY/Code/kiloio/server/lib/util.js",
+		"/C/Users/3up_000/Desktop/text.js",
+		"//STRAWBERRY/Code/kiloio/server/lib/KActorSrv.js",
+		"//STRAWBERRY/Code/kiloio/common/commonjs/KInputData.js",
+		"/I/w/ClickThink/ClickThink/AIBrain.cs",
+		"/I/w/ClickThink/ClickThink/ActionInterface.cs",
+		"/I/w/ClickThink/ClickThink/GameActor.cs",
+		"//STRAWBERRY/Code/kiloio/server/lib/KInputData.js",
+		"//STRAWBERRY/Code/kiloio/client/js/KCamera.js",
 		"//STRAWBERRY/Code/kiloio/client/js/clientutil.js",
 		"//STRAWBERRY/Code/kiloio/client/js/globals.js",
-		"//STRAWBERRY/Code/kiloio/common/clientjs/KActorCli.js",
-		"//STRAWBERRY/Code/kiloio/common/clientjs/KWorldCli.js",
-		"//STRAWBERRY/Code/kiloio/common/clientjs/KUserCli.js",
-		"//STRAWBERRY/Code/kiloio/common/clientjs/KSectorCli.js",
-		"//STRAWBERRY/Code/kiloio/client/js/prep.js",
-		"//STRAWBERRY/Code/kiloio/client/js/app.js",
 		"//STRAWBERRY/Code/testnodejs/client/js/app.js",
-		"//STRAWBERRY/Code/kiloio/server/fishserver.js",
-		"//STRAWBERRY/Code/kiloio/common/commonjs/KActorData.js",
-		"//STRAWBERRY/Code/kiloio/common/commonjs/KUserData.js",
 		"//STRAWBERRY/Code/kiloio/common/commonjs/testgame.js",
 		"//STRAWBERRY/Code/kiloio/common/clientjs/KApp.js",
 		"//STRAWBERRY/Code/kiloio/client/js/KApp.js",
-		"//STRAWBERRY/Code/kiloio/client/index.html",
 		"/I/w/kiloio/client/js/KApp.js",
 		"//STRAWBERRY/Code/kiloio/client/js/KActorData.js",
 		"//STRAWBERRY/Code/kiloio/server/lib/KSectorSrv.js",
-		"//STRAWBERRY/Code/kiloio/server/lib/util.js",
-		"//STRAWBERRY/Code/kiloio/server/lib/KActorSrv.js",
 		"//STRAWBERRY/Code/kiloio/server/lib/KActorData.js",
 		"//STRAWBERRY/Code/kiloio/server/lib/KWorld.js",
 		"//STRAWBERRY/Code/kiloio/client/js/KUserData.js",
@@ -816,34 +764,7 @@
 		"/I/w/threefish/Assets/Code/Brains/Brain.cs",
 		"/I/w/threefish/Assets/Code/Brains/BrainRecord.cs",
 		"//Strawberry/www/index.html",
-		"/I/w/threefish/Assets/Code/InputBoss.cs",
-		"/I/w/threefish/Assets/Editor/SettingsMaker.cs",
-		"/I/w/threefish/Assets/Code/World.cs",
-		"/I/w/threefish/Assets/Code/UserSettings.cs",
-		"/I/w/threefish/Assets/Code/WorldSettings.cs",
-		"/I/w/threefish/Assets/Code/SpriteBoss.cs",
-		"/I/w/threefish/Assets/Code/Actors/Fish.cs",
-		"/I/w/threefish/Assets/Code/BoatCameraControl.cs",
-		"/I/w/threefish/Assets/Code/Actors/Boat.cs",
-		"/I/w/threefish/Assets/Code/User.cs",
-		"/I/w/threefish/Assets/Code/SpawnBoss.cs",
-		"/I/w/threefish/Assets/Code/SettingsMaker.cs",
-		"/I/w/threefish/Assets/Code/Settings.cs",
-		"/I/w/threefish/Assets/Vectrosity 4/Vectrosity 4 Documentation/Vectrosity changelog.txt",
-		"/I/w/ThreeFish/Assets/Plugins/VectrosityScripts/VectorLine.cs",
-		"/I/w/ThreeFish/Assets/Code/User.cs",
-		"/I/w/ThreeFish/Assets/Code/Actors/ActorHUD.cs",
-		"/I/w/ThreeFish/Assets/Code/SpawnBoss.cs",
-		"/I/w/ThreeFish/Assets/Code/Brains/Brain.cs",
-		"/I/w/ThreeFish/Assets/Code/Actors/Actor.cs",
-		"/I/w/ThreeFish/Assets/CodeLib/GumboLib/BasicMachine.cs",
-		"/I/w/BKUP/othreefish/Assets/Code/Common/BasicMachine.cs",
-		"/I/w/BKUP/othreefish/Assets/Code/FishBody.cs",
-		"/i/w/BKUP/othreefish/Assets/Code/Common/BasicBody.cs",
-		"/I/w/ThreeFish/Assets/Code/Utils.cs",
-		"/I/w/ThreeFish/Assets/Code/Actors/Boat.cs",
-		"/I/w/ThreeFish/Assets/Code/Actors/Hook.cs",
-		"/I/w/ThreeFish/Assets/Code/UserManager.cs"
+		"/I/w/threefish/Assets/Code/InputBoss.cs"
 	],
 	"find":
 	{
@@ -879,6 +800,75 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"makeac",
+			"actorIDs",
+			"circle.p",
+			"worlduser",
+			"new kactorsrv",
+			"moveperiod",
+			"turnLoop",
+			"tickLoop",
+			"moveperiod",
+			"s-gameSetup",
+			"turnloop",
+			"4",
+			"movePeriod",
+			"moveLoop",
+			"'0'",
+			"g_",
+			"KUtil",
+			"clientjs/",
+			"serverjs/",
+			"commonjs/",
+			"serverjs",
+			"KUtil",
+			"requestanim",
+			"gameloop",
+			"handleLogic",
+			"for",
+			"clientTransmit",
+			"'0'",
+			"url =",
+			"map.url",
+			"url",
+			"libjs",
+			"console",
+			"new kuserdata",
+			"new KActorData",
+			"command",
+			"commandQueue",
+			"sendAddPacketsToSocket",
+			"addactor",
+			"lastVelocity",
+			"SAT",
+			"'text!",
+			"('text",
+			"'text",
+			"'test",
+			"text!",
+			"momentumDesireMove",
+			"config",
+			"libjs/",
+			"libjs.qu",
+			"QUAD",
+			"KUtil",
+			"util.",
+			"util",
+			"gameStart",
+			"util",
+			"exports",
+			"util.",
+			"cfg",
+			"config",
+			"config.json",
+			"config.js",
+			"quadtree",
+			"new ",
+			"gameStart",
+			"util",
+			"quadtree",
+			"new KActorSrv",
+			"KActorSrv",
 			"KActorData",
 			"inputjoy",
 			"localActorData.inputJoy",
@@ -937,76 +927,7 @@
 			"inputJoy",
 			"g_joy",
 			"mainactor",
-			"space",
-			"attachcontrol",
-			"onPointerDown",
-			"Cameracur",
-			"onPointerDown",
-			"cameracurs",
-			"cameraAnchor",
-			"cameraCursor",
-			"validNick",
-			"setGround",
-			"getGround",
-			"setGround",
-			".Length",
-			"Length",
-			"actorList",
-			"colliderList",
-			"addLetter",
-			"setGround",
-			"remLetter",
-			"g_world.",
-			"g_sect",
-			"tickstart",
-			"addLetter",
-			"getGround",
-			"colliderlist",
-			"tileRadius",
-			"g_sector",
-			"g_unit",
-			"G_ClampScale",
-			"localSeed",
-			"G_GetSeed",
-			"getGround",
-			"sectorRadius",
-			"rcvAddSector",
-			"addSectorData",
-			"requestSector",
-			"requestsec",
-			"c-requestSector",
-			"requested sector",
-			"requestedsector",
-			"g_users",
-			"world",
-			"getSectorRealPos",
-			"getse",
-			"KWorld",
-			"rcvAddSector",
-			"map",
-			"rcvAddSector",
-			"addSectorData",
-			"zeroSector",
-			"getSectorSecPos",
-			"addsec",
-			"KMapCli",
-			"new ksec",
-			"rcvAddActor",
-			"adduser",
-			"addActorData",
-			"originTilePos",
-			"slideCountY",
-			"getGround",
-			"getRelativeTile",
-			"getground",
-			"getGround",
-			"getTileFromRealPos",
-			"getGround",
-			"attemptmove",
-			"collisionProcess",
-			"attemptMoveWorld",
-			"getGround",
-			"firstse"
+			"space"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -1014,6 +935,10 @@
 		"regex": false,
 		"replace_history":
 		[
+			"client/",
+			"server/",
+			"common/",
+			"quadtree",
 			"localInput",
 			"actorList",
 			"KWorldCli",
@@ -1136,150 +1061,24 @@
 	"groups":
 	[
 		{
-			"selected": 1,
+			"selected": 4,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "client/index.html",
+					"file": "common/serverjs/KItemSrv.js",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1131,
+						"buffer_size": 1052,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								560,
-								560
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/HTML/HTML.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 44.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 16,
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "server/fishserver.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 8213,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								937,
-								937
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 200.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 3,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "common/commonjs/KActorData.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 901,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								395,
-								395
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": -0.0,
-						"translation.y": 140.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 9,
-					"type": "text"
-				}
-			]
-		},
-		{
-			"selected": 5,
-			"sheets":
-			[
-				{
-					"buffer": 3,
-					"file": "common/clientjs/KGame.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 13224,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								11425,
-								11425
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 5677.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 10,
-					"type": "text"
-				},
-				{
-					"buffer": 4,
-					"file": "common/commonjs/KInputData.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 745,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								27,
-								712
+								89,
+								136
 							]
 						],
 						"settings":
@@ -1296,11 +1095,11 @@
 					"type": "text"
 				},
 				{
-					"buffer": 5,
+					"buffer": 1,
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 19512,
+						"buffer_size": 1789,
 						"regions":
 						{
 							"match":
@@ -1309,672 +1108,32 @@
 								"regions":
 								[
 									[
-										206,
-										217
+										213,
+										226
 									],
 									[
-										388,
-										399
+										596,
+										604
 									],
 									[
-										525,
-										536
+										784,
+										792
 									],
 									[
-										712,
-										723
+										803,
+										811
 									],
 									[
-										921,
-										936
+										1127,
+										1135
 									],
 									[
-										1136,
-										1151
+										1387,
+										1395
 									],
 									[
-										1329,
-										1344
-									],
-									[
-										1540,
-										1553
-									],
-									[
-										1779,
-										1792
-									],
-									[
-										2102,
-										2110
-									],
-									[
-										2131,
-										2139
-									],
-									[
-										2202,
-										2210
-									],
-									[
-										2231,
-										2239
-									],
-									[
-										2290,
-										2298
-									],
-									[
-										2322,
-										2330
-									],
-									[
-										2736,
-										2744
-									],
-									[
-										2936,
-										2944
-									],
-									[
-										2986,
-										2994
-									],
-									[
-										3063,
-										3071
-									],
-									[
-										3111,
-										3119
-									],
-									[
-										3375,
-										3383
-									],
-									[
-										3425,
-										3433
-									],
-									[
-										3547,
-										3555
-									],
-									[
-										3601,
-										3609
-									],
-									[
-										3655,
-										3663
-									],
-									[
-										3711,
-										3719
-									],
-									[
-										3960,
-										3968
-									],
-									[
-										4124,
-										4132
-									],
-									[
-										4175,
-										4183
-									],
-									[
-										4217,
-										4225
-									],
-									[
-										4259,
-										4267
-									],
-									[
-										4301,
-										4309
-									],
-									[
-										4343,
-										4351
-									],
-									[
-										4385,
-										4393
-									],
-									[
-										4427,
-										4435
-									],
-									[
-										4469,
-										4477
-									],
-									[
-										4511,
-										4519
-									],
-									[
-										4552,
-										4560
-									],
-									[
-										4724,
-										4732
-									],
-									[
-										4928,
-										4936
-									],
-									[
-										5129,
-										5137
-									],
-									[
-										5367,
-										5375
-									],
-									[
-										5410,
-										5418
-									],
-									[
-										5450,
-										5458
-									],
-									[
-										5491,
-										5499
-									],
-									[
-										5532,
-										5540
-									],
-									[
-										5573,
-										5581
-									],
-									[
-										5614,
-										5622
-									],
-									[
-										5653,
-										5661
-									],
-									[
-										5831,
-										5839
-									],
-									[
-										6175,
-										6183
-									],
-									[
-										6230,
-										6238
-									],
-									[
-										6416,
-										6424
-									],
-									[
-										6592,
-										6600
-									],
-									[
-										6921,
-										6929
-									],
-									[
-										7121,
-										7129
-									],
-									[
-										7171,
-										7179
-									],
-									[
-										7248,
-										7256
-									],
-									[
-										7296,
-										7304
-									],
-									[
-										7560,
-										7568
-									],
-									[
-										7610,
-										7618
-									],
-									[
-										7732,
-										7740
-									],
-									[
-										7786,
-										7794
-									],
-									[
-										7840,
-										7848
-									],
-									[
-										7896,
-										7904
-									],
-									[
-										8137,
-										8145
-									],
-									[
-										8188,
-										8196
-									],
-									[
-										8230,
-										8238
-									],
-									[
-										8272,
-										8280
-									],
-									[
-										8314,
-										8322
-									],
-									[
-										8356,
-										8364
-									],
-									[
-										8398,
-										8406
-									],
-									[
-										8440,
-										8448
-									],
-									[
-										8482,
-										8490
-									],
-									[
-										8524,
-										8532
-									],
-									[
-										8565,
-										8573
-									],
-									[
-										8737,
-										8745
-									],
-									[
-										8941,
-										8949
-									],
-									[
-										9142,
-										9150
-									],
-									[
-										9380,
-										9388
-									],
-									[
-										9423,
-										9431
-									],
-									[
-										9463,
-										9471
-									],
-									[
-										9504,
-										9512
-									],
-									[
-										9545,
-										9553
-									],
-									[
-										9586,
-										9594
-									],
-									[
-										9627,
-										9635
-									],
-									[
-										9666,
-										9674
-									],
-									[
-										9844,
-										9852
-									],
-									[
-										10188,
-										10196
-									],
-									[
-										10243,
-										10251
-									],
-									[
-										10429,
-										10437
-									],
-									[
-										10605,
-										10613
-									],
-									[
-										10878,
-										10886
-									],
-									[
-										10929,
-										10937
-									],
-									[
-										10971,
-										10979
-									],
-									[
-										11013,
-										11021
-									],
-									[
-										11055,
-										11063
-									],
-									[
-										11097,
-										11105
-									],
-									[
-										11139,
-										11147
-									],
-									[
-										11181,
-										11189
-									],
-									[
-										11223,
-										11231
-									],
-									[
-										11265,
-										11273
-									],
-									[
-										11306,
-										11314
-									],
-									[
-										11478,
-										11486
-									],
-									[
-										11682,
-										11690
-									],
-									[
-										11883,
-										11891
-									],
-									[
-										12121,
-										12129
-									],
-									[
-										12164,
-										12172
-									],
-									[
-										12204,
-										12212
-									],
-									[
-										12245,
-										12253
-									],
-									[
-										12286,
-										12294
-									],
-									[
-										12327,
-										12335
-									],
-									[
-										12368,
-										12376
-									],
-									[
-										12407,
-										12415
-									],
-									[
-										12585,
-										12593
-									],
-									[
-										12929,
-										12937
-									],
-									[
-										12984,
-										12992
-									],
-									[
-										13170,
-										13178
-									],
-									[
-										13346,
-										13354
-									],
-									[
-										13629,
-										13637
-									],
-									[
-										13833,
-										13841
-									],
-									[
-										14034,
-										14042
-									],
-									[
-										14272,
-										14280
-									],
-									[
-										14315,
-										14323
-									],
-									[
-										14355,
-										14363
-									],
-									[
-										14396,
-										14404
-									],
-									[
-										14437,
-										14445
-									],
-									[
-										14478,
-										14486
-									],
-									[
-										14519,
-										14527
-									],
-									[
-										14558,
-										14566
-									],
-									[
-										14736,
-										14744
-									],
-									[
-										15080,
-										15088
-									],
-									[
-										15135,
-										15143
-									],
-									[
-										15321,
-										15329
-									],
-									[
-										15497,
-										15505
-									],
-									[
-										15794,
-										15802
-									],
-									[
-										16032,
-										16040
-									],
-									[
-										16075,
-										16083
-									],
-									[
-										16115,
-										16123
-									],
-									[
-										16156,
-										16164
-									],
-									[
-										16197,
-										16205
-									],
-									[
-										16238,
-										16246
-									],
-									[
-										16279,
-										16287
-									],
-									[
-										16318,
-										16326
-									],
-									[
-										16496,
-										16504
-									],
-									[
-										16874,
-										16884
-									],
-									[
-										17015,
-										17025
-									],
-									[
-										17195,
-										17205
-									],
-									[
-										17253,
-										17263
-									],
-									[
-										17375,
-										17385
-									],
-									[
-										17582,
-										17592
-									],
-									[
-										17690,
-										17700
-									],
-									[
-										17840,
-										17850
-									],
-									[
-										17970,
-										17980
-									],
-									[
-										17993,
-										18003
-									],
-									[
-										18031,
-										18041
-									],
-									[
-										18208,
-										18218
-									],
-									[
-										18236,
-										18246
-									],
-									[
-										18415,
-										18425
-									],
-									[
-										18472,
-										18482
-									],
-									[
-										18614,
-										18624
-									],
-									[
-										18754,
-										18764
-									],
-									[
-										18904,
-										18914
-									],
-									[
-										18979,
-										18989
-									],
-									[
-										19139,
-										19149
-									],
-									[
-										19163,
-										19173
-									],
-									[
-										19342,
-										19352
+										1673,
+										1679
 									]
 								],
 								"scope": ""
@@ -1983,15 +1142,15 @@
 						"selection":
 						[
 							[
-								18242,
-								18242
+								1676,
+								1676
 							]
 						],
 						"settings":
 						{
 							"detect_indentation": false,
 							"line_numbers": false,
-							"output_tag": 9,
+							"output_tag": 3,
 							"result_base_dir": "",
 							"result_file_regex": "^([A-Za-z\\\\/<].*):$",
 							"result_line_regex": "^ +([0-9]+):",
@@ -1999,117 +1158,147 @@
 							"syntax": "Packages/Default/Find Results.hidden-tmLanguage"
 						},
 						"translation.x": 0.0,
-						"translation.y": 7935.0,
+						"translation.y": 675.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 4,
 					"type": "text"
 				},
 				{
-					"buffer": 6,
-					"file": "/I/w/ClickThink/ClickThink/AIBrain.cs",
+					"buffer": 2,
+					"file": "common/serverjs/KUserSrv.js",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 4573,
+						"buffer_size": 2424,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1157,
-								1157
+								704,
+								704
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/C#/C#.tmLanguage",
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
 							"tab_size": 4,
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 69.0,
+						"translation.y": 135.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 2,
 					"type": "text"
 				},
 				{
-					"buffer": 7,
-					"file": "/I/w/ClickThink/ClickThink/ActionInterface.cs",
+					"buffer": 3,
+					"file": "common/commonjs/KUserData.js",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 13494,
+						"buffer_size": 701,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								13494,
-								13494
+								577,
+								577
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/C#/C#.tmLanguage",
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
 							"tab_size": 4,
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 4450.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 1,
 					"type": "text"
 				},
 				{
-					"buffer": 8,
-					"file": "/I/w/ClickThink/ClickThink/GameActor.cs",
+					"buffer": 4,
+					"file": "common/serverjs/KWorld.js",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 3200,
+						"buffer_size": 3911,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								2413,
-								2413
+								2213,
+								2213
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/C#/C#.tmLanguage",
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
 							"tab_size": 4,
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 1089.0,
+						"translation.y": 777.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
 					"type": "text"
 				},
 				{
-					"buffer": 9,
-					"file": "server/lib/KInputData.js",
+					"buffer": 5,
+					"file": "server/fishserver.js",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 779,
+						"buffer_size": 8677,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								264,
-								264
+								7369,
+								7381
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 3455.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "common/serverjs/KActorSrv.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 4362,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								957,
+								982
 							]
 						],
 						"settings":
@@ -2124,22 +1313,28 @@
 					},
 					"stack_index": 6,
 					"type": "text"
-				},
+				}
+			]
+		},
+		{
+			"selected": 0,
+			"sheets":
+			[
 				{
-					"buffer": 10,
-					"file": "server/lib/KActorData.js",
-					"semi_transient": true,
+					"buffer": 7,
+					"file": "common/commonjs/KUtil.js",
+					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1426,
+						"buffer_size": 2202,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								4,
-								14
+								1344,
+								1353
 							]
 						],
 						"settings":
@@ -2149,220 +1344,10 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 570.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 5,
-					"type": "text"
-				},
-				{
-					"buffer": 11,
-					"file": "server/lib/KActorSrv.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 4419,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 8,
-					"type": "text"
-				},
-				{
-					"buffer": 12,
-					"file": "common/clientjs/KActorCli.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 5622,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								41,
-								46
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 12,
-					"type": "text"
-				},
-				{
-					"buffer": 13,
-					"file": "common/clientjs/KUserCli.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 872,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								836,
-								836
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 180.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 11,
-					"type": "text"
-				},
-				{
-					"buffer": 14,
-					"file": "client/js/KCamera.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 8022,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								968,
-								968
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 185.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 13,
-					"type": "text"
-				},
-				{
-					"buffer": 15,
-					"file": "client/js/app.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 3053,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								846,
-								846
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 5.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 15,
-					"type": "text"
-				},
-				{
-					"buffer": 16,
-					"file": "client/js/prep.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1601,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1215,
-								1215
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": -0.0,
-						"translation.y": 374.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 14,
-					"type": "text"
-				},
-				{
-					"buffer": 17,
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 3721,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								585,
-								585
-							]
-						],
-						"settings":
-						{
-							"auto_name": "",
-							"syntax": "Packages/Text/Plain text.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 660.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 17,
 					"type": "text"
 				}
 			]
@@ -2396,7 +1381,7 @@
 		"cols":
 		[
 			0.0,
-			0.155636216979,
+			0.680860403863,
 			1.0
 		],
 		"rows":
@@ -2432,6 +1417,38 @@
 		"selected_items":
 		[
 			[
+				"kse",
+				"common\\serverjs\\KSectorSrv.js"
+			],
+			[
+				"kaco",
+				"common\\commonjs\\KActorData.js"
+			],
+			[
+				"ka",
+				"server\\serverjs\\KActorSrv.js"
+			],
+			[
+				"kuti",
+				"server\\serverjs\\KUtil.js"
+			],
+			[
+				"ksec",
+				"server\\serverjs\\KSectorSrv.js"
+			],
+			[
+				"ks",
+				"server\\serverjs\\KUserSrv.js"
+			],
+			[
+				"users",
+				"server\\lib\\KUserSrv.js"
+			],
+			[
+				"kactorsr",
+				"server\\lib\\KActorSrv.js"
+			],
+			[
 				"fishs",
 				"server\\fishserver.js"
 			],
@@ -2446,10 +1463,6 @@
 			[
 				"kus",
 				"client\\js\\KUserData.js"
-			],
-			[
-				"kse",
-				"server\\lib\\KSectorSrv.js"
 			],
 			[
 				"ku",
@@ -2914,34 +1927,6 @@
 			[
 				"threatl",
 				"Code\\ThreatList.cs"
-			],
-			[
-				"isom",
-				"Code\\Lib\\Common\\IsoMath.cs"
-			],
-			[
-				"state",
-				"Code\\Lib\\Common\\StateMachine.cs"
-			],
-			[
-				"statem",
-				"Code\\Lib\\StateMachine.cs"
-			],
-			[
-				"playga",
-				"GooglePlayGames\\ISocialPlatform\\PlayGamesPlatform.cs"
-			],
-			[
-				"uim",
-				"UI\\UIMgr.cs"
-			],
-			[
-				"puzzp",
-				"Game\\PuzzleParams.cs"
-			],
-			[
-				"gamepa",
-				"Game\\GameParams.cs"
 			]
 		],
 		"width": 0.0
@@ -2966,9 +1951,9 @@
 		"selected_items":
 		[
 		],
-		"width": 604.0
+		"width": 392.0
 	},
-	"selected_group": 1,
+	"selected_group": 0,
 	"settings":
 	{
 	},

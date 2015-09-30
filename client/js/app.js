@@ -8,19 +8,20 @@ requirejs.config({
     //never includes a ".js" extension since
     //the paths config could be for a directory.
     paths: {
-        clientjs: '../clientjs',
-        commonjs: '../commonjs'
+        client: '../clientjs',
+        common: '../commonjs',
+        text: '../'
     }
 });
 
 var game = null;
+var config = null;
 
-requirejs(["commonjs/KUserData", "clientjs/KUserCli", "commonjs/KActorData", "clientjs/KActorCli", "clientjs/KSectorCli", "clientjs/KWorldCli", "clientjs/KGame"], 
+
+requirejs(["common/KUserData", "client/KUserCli", "common/KActorData", "client/KActorCli", "client/KSectorCli", "client/KWorldCli", "client/KGame"], 
     function(KUserData, KUserCli, KActorData, KActorCli, KSectorCli, KWorldCli, KGame) {
 
-        game = new KGame('abc');
-        console.log('require game');
-        console.log(game);
+        game = new KGame('kgame');
         doHandleKeyDown = function(key) {
             game.handleKeyDown(key);
         }
@@ -78,7 +79,7 @@ function startGame() {
 // check if nick is valid alphanumeric characters (and underscores)
 function validNick() {
     var regex = /^\w*$/;
-    console.log('Regex Test', regex.exec(playerNameInput.value));
+    //console.log('Regex Test', regex.exec(playerNameInput.value));
     return regex.exec(playerNameInput.value) !== null;
 }
 
@@ -92,7 +93,6 @@ function sendPing()
     
 function setupAppSocket(socket) 
 {
-    console.log("Socket setup");
         // Handle ping
     socket.on('s-pong', function () {
         var latency = Date.now() - startPingTime;
@@ -119,6 +119,8 @@ function setupAppSocket(socket)
     socket.on('s-gameSetup', function(data) {
         gameWidth = data.gameWidth;
         gameHeight = data.gameHeight;
+        turnLength = data.turnLength;
+        turnloop(turnLength);
     });
     
 
@@ -141,4 +143,11 @@ function animloop(){
 function gameLoop() {
     game.handleLogic();
     game.handleGraphics();
+}
+
+function turnloop(turnLength) {
+    setTimeout(function () {
+        game.handleTurnFinished();
+        turnloop(turnLength);
+    }, turnLength);
 }

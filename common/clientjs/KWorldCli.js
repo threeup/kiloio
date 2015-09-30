@@ -1,4 +1,4 @@
-define(["clientjs/KSectorCli", "clientjs/KUserCli", "clientjs/KActorCli"], 
+define(["client/KSectorCli", "client/KUserCli", "client/KActorCli"], 
     function (KSectorCli, KUserCli) 
 { 
     var KWorldCli = function(seed)

@@ -1,4 +1,4 @@
-define(["commonjs/KUserData","serverjs/KActorSrv"], 
+define(["common/KUserData","server/KActorSrv"], 
     function (KUserData, KActorSrv) 
 { 
     var SAT     = require('sat');
@@ -13,6 +13,7 @@ define(["commonjs/KUserData","serverjs/KActorSrv"],
         this.mainActor = null;
         this.lastHeartbeat = 0;
         this.commandQueue = [];
+        this.nextActorID = 1;
     }
 
     KUserSrv.prototype.clone = function(p_other) 
@@ -22,7 +23,7 @@ define(["commonjs/KUserData","serverjs/KActorSrv"],
         this.commandQueue = p_other.commandQueue;    
     }
 
-    KUserSrv.prototype.makeActor = function(p_sector) {
+    KUserSrv.prototype.makeHeroActor = function(p_sector) {
         var userData = this.userData;
         var shortName = userData.username.substring(0, 3);
         var actorID = userData.userID+this.actors.length;
@@ -34,6 +35,29 @@ define(["commonjs/KUserData","serverjs/KActorSrv"],
         this.actors.push(actor.actorID);
         this.userData.actorIDs.push(actor.actorID);
         return actor;
+    }
+
+    KUserSrv.prototype.makeItemActor = function(p_heroActor, p_velocity) {
+        var userData = this.userData;
+        var shortName = userData.username.substring(0, 3);
+        var actorID = userData.userID+this.nextActorID;
+        this.nextActorID = (this.nextActorID + 1) % 10;
+
+        var circle = new SAT.Circle(p_heroActor.circle.pos, g_unit*0.1);
+        var actor = new KActorSrv(userData.userID, actorID, shortName+actorID, circle, p_heroActor.sector);
+        actor.actorData.velocity.x = p_velocity.x;
+        actor.actorData.velocity.y = p_velocity.y;
+        actor.actorData.ttl = 1;
+        this.actors.push(actor.actorID);
+        this.userData.actorIDs.push(actor.actorID);
+        return actor;
+    }
+
+    KUserSrv.prototype.killActor = function(p_actor)
+    {
+        this.actors.removeNumber(p_actor.actorID);
+        this.userData.actorIDs.removeNumber(p_actor.actorID);
+        delete p_actor;
     }
 
     KUserSrv.prototype.selectActor = function(actor)

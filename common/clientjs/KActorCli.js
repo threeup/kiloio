@@ -1,4 +1,4 @@
-define(["commonjs/KActorData","commonjs/KInputData"], 
+define(["common/KActorData","common/KInputData"], 
     function (KActorData,KInputData) 
 { 
     var KActorCli = function()

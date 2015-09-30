@@ -1,4 +1,4 @@
-define(["serverjs/KWorld", "serverjs/KUtil", "libjs/quadtree"], 
+define(["server/KWorld", "common/KUtil", "libjs/quadtree"], 
     function (KWorld, KUtil, quadtree) 
 { 
     var SAT     = require('sat');
@@ -92,7 +92,7 @@ define(["serverjs/KWorld", "serverjs/KUtil", "libjs/quadtree"],
         }
     }
 
-    KSectorSrv.prototype.tickStart = function() 
+    KSectorSrv.prototype.turnStart = function() 
     {
         this.tree.clear();
         this.tree.insert(this.actorList);
@@ -103,7 +103,7 @@ define(["serverjs/KWorld", "serverjs/KUtil", "libjs/quadtree"],
         }
     }
 
-    KSectorSrv.prototype.tickEnd = function() 
+    KSectorSrv.prototype.turnEnd = function() 
     {
         for(var i=0;i<this.actorList.length;++i)
         {

@@ -1073,6 +1073,7 @@ var requirejs, require, define, xpcUtil;
             load: function () {
                 var url = this.map.url;
 
+
                 //Regular dependency.
                 if (!urlFetched[url]) {
                     urlFetched[url] = true;
@@ -1244,6 +1245,7 @@ var requirejs, require, define, xpcUtil;
                     //If a paths config, then just load that file instead to
                     //resolve the plugin, as it is built into that paths layer.
                     if (bundleId) {
+                        console.log(bundleId);
                         this.map.url = context.nameToUrl(bundleId);
                         this.load();
                         return;
@@ -4602,7 +4604,7 @@ define('logger', ['env!env/print'], function (print) {
 (function (root, factory) {
     'use strict';
 
-    // Universal Module Definition (UMD) to support AMD, CommonJS/Node.js,
+    // Universal Module Definition (UMD) to support AMD, common/Node.js,
     // Rhino, and plain browser loading.
 
     /* istanbul ignore next */
@@ -30580,7 +30582,7 @@ function (args, quit, logger, build) {
                 outDir = args[1];
 
                 if (!srcDir || !outDir) {
-                    print('Usage: path/to/commonjs/modules output/dir');
+                    print('Usage: path/to/common/modules output/dir');
                     return;
                 }
 
