@@ -3,18 +3,16 @@ define(["common/KActorData","common/KInputData", "server/KSectorSrv"],
 { 
     var SAT     = require('sat');
     var g_unit = 10; // 10 
-    var KActorSrv = function(p_userID, p_actorID, p_name, p_circle, p_sector) 
+    var KActorSrv = function(p_userID, p_actorID, p_name, p_sector, p_visual) 
     { 
-        var posX = p_circle.pos.x;
-        var posY = p_circle.pos.y;
+        
         this.actorData = new KActorData();
         this.actorData.userID = p_userID;
         this.actorData.actorID = p_actorID;
         this.actorData.actorname = p_name;
-        this.actorData.position.x = posX;
-        this.actorData.position.y = posY;
+        this.actorData.visual = p_visual;
         this.inputData = new KInputData();
-        this.circle = p_circle;
+       
         this.sector = p_sector;
         this.sector.actorList.push(this);
         this.isStopped = true;
@@ -22,6 +20,34 @@ define(["common/KActorData","common/KInputData", "server/KSectorSrv"],
         this.isCharging = false;
         this.chargeTime = 0;
     }
+    KActorSrv.prototype.addCircle = function(p_x, p_y, p_r)
+    {        
+        this.circle = new SAT.Circle(new SAT.Vector(p_x, p_y), p_r);;
+        this.actorData.position.x = p_x;
+        this.actorData.position.y = p_y;
+    }
+
+    
+    KActorSrv.prototype.beforeTurn = function(config)
+    {
+        this.actorData.facingHead.x = this.inputData.lsx;
+        this.actorData.facingHead.y = this.inputData.lsy;
+        this.actorData.facingEngine.x = this.inputData.rsx;
+        this.actorData.facingEngine.y = this.inputData.rsy;
+    }
+    KActorSrv.prototype.afterTurn = function(config)
+    {
+        if( this.actorData.timeToLive > 0)
+        {
+            this.actorData.timeToLive--;
+            if( this.actorData.timeToLive === 0 )
+            {
+                console.log("dead");
+                this.actorData.actorState = "D";
+            }
+        }
+    }
+    
     KActorSrv.prototype.momentumDesireMove = function(config)
     {
         this.actorData.velocity.x += this.actorData.lastVelocity.x*this.actorData.momentum;

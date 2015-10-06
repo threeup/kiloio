@@ -20,6 +20,21 @@ define(["common/KUserData", "client/KActorCli"],
     this.userData.mainActorID = actor.actorID;
   }
 
+  KUserCli.prototype.removeActor = function(p_actor)
+  {
+    var removeID = p_actor.actorData.actorID;
+    for(var i = this.actors.length-1; i >= 0; --i)
+    {
+        var actor = this.actors[i];
+        if( actor.actorData.actorID === removeID)
+        {
+            this.actors.splice(i, 1);
+            actor.dispose();
+            break;
+        }
+    }
+  }
+
   KUserCli.prototype.rcvUserTick = function(hue)
   {
     this.userData.hue = hue;

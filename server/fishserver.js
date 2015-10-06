@@ -51,7 +51,7 @@ function gameStart(KWorld, KUserSrv, KUtil)
         maxChildren: 1, 
         maxDepth: 5
     };
-    g_world = new KWorld(2);
+    g_world = new KWorld(2, io);
     g_world.worldUser = new KUserSrv(0,nextWorlduserID);
     g_world.worldUser.userData.homePosition.x = 0;
     g_world.worldUser.userData.homePosition.y = 0;
@@ -207,7 +207,7 @@ function sendUpdates() {
 }
 
 function sendReport() {
-	console.log('users');
+	/*console.log('users');
     g_world.users.forEach( function(user) 
     {
     	console.log(user.userData.socketid+','+user.userData.userID);
@@ -217,11 +217,12 @@ function sendReport() {
     {
         console.log(actor.actorData.actorname);
         console.log(actor.actorData.position);
+        console.log(actor.actorData.timeToLive);
     });
     //console.log('sectorZero');
     //var sector = g_world.getSectorSecPos(0,0);
     //sector.draw();
-    /*
+    
     g_world.sectors.forEach( function(sectorRow)
     { 
         sectorRow.forEach( function(sector)

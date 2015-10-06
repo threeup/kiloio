@@ -221,6 +221,9 @@ define(["client/KWorldCli", "client/KSectorCli", "client/KUserCli", "client/KAct
     socket.on('s-addActorData', function (actorData) {
         game.rcvAddActor(actorData);
       });
+    socket.on('s-remActorData', function (actorData) {
+        game.rcvRemActor(actorData);
+      });
     socket.on('s-updateUserData', function (userData) {
         var idx = KUtil.findUser(game.users, userData.userID);
         if( idx < 0 )
@@ -260,7 +263,7 @@ define(["client/KWorldCli", "client/KSectorCli", "client/KUserCli", "client/KAct
   }
   KGame.prototype.rcvAddUser = function(p_userData)
   {
-    var uidx = KUtil.findUser(game.users, p_userData.userID);
+    var uidx = KUtil.findUser(this.users, p_userData.userID);
     var user = null;
     if( uidx < 0 )
     {
@@ -289,13 +292,13 @@ define(["client/KWorldCli", "client/KSectorCli", "client/KUserCli", "client/KAct
 
   KGame.prototype.rcvAddActor = function(p_actorData)
   {
-    var aidx = KUtil.findActor(game.actors, p_actorData.actorID);
+    var aidx = KUtil.findActor(this.actors, p_actorData.actorID);
     var actor = null;
     if( aidx < 0 )
     {
       actor = new KActorCli();
       actor.actorData.clone(p_actorData);
-      actor.addModel();
+      actor.addModel(actor.actorData.visual);
       this.actors.push(actor);
     }
     else
@@ -305,7 +308,7 @@ define(["client/KWorldCli", "client/KSectorCli", "client/KUserCli", "client/KAct
       this.actors[aidx] = actor;
     }
     
-    var uidx = KUtil.findUser(game.users, p_actorData.userID);
+    var uidx = KUtil.findUser(this.users, p_actorData.userID);
     if( uidx < 0 )
     {
       console.log('rcvAddActor missing user');
@@ -319,7 +322,21 @@ define(["client/KWorldCli", "client/KSectorCli", "client/KUserCli", "client/KAct
         this.users[uidx].selectActor(actor);
       }
     }   
-    
+  }
+
+  KGame.prototype.rcvRemActor = function(p_actorData)
+  {
+    for(var i = this.actors.length-1; i >= 0; --i)
+    {
+        var actor = this.actors[i];
+        if( actor.actorData.actorID === p_actorData.actorID)
+        {
+            var uidx = KUtil.findUser(this.users, actor.actorData.userID);
+            var user = this.users[uidx];
+            this.actors.splice(i, 1);
+            user.removeActor(actor);
+        }
+    }
   }
 
   KGame.prototype.handleKeyUp = function(key)

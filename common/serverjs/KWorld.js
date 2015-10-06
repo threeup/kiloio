@@ -1,7 +1,7 @@
 define(["server/KSectorSrv", "common/KUtil"], 
     function (KSectorSrv, KUtil) 
 { 
-    var KWorld = function(seed)
+    var KWorld = function(seed, io)
     {
         //max = 4294967295 ?
         this.seed = seed*1000000;
@@ -12,6 +12,7 @@ define(["server/KSectorSrv", "common/KUtil"],
         this.sectors = [];
         this.users = [];
         this.actors = [];
+        this.io = io;
         for(var i = -this.worldRadius; i <= this.worldRadius; ++i)
         {
             var sectorRow = [];
@@ -70,7 +71,7 @@ define(["server/KSectorSrv", "common/KUtil"],
             Math.round((y/this.tileUnit)/this.sectorUnit));
     }
 
-    KWorld.prototype.tickLoop = function(config, io, sockets)
+    KWorld.prototype.tickLoop = function(config, sockets)
     {
         for (var i = 0; i < this.users.length; i++) {
             var user = this.users[i];
@@ -79,18 +80,17 @@ define(["server/KSectorSrv", "common/KUtil"],
                 var command = user.commandQueue.pop();
                 if(command === 's')
                 {
-                    var sector = this.getSectorRealPos(
-                        user.userData.homePosition.x, 
-                        user.userData.homePosition.y);
+                    var g_unit = 10;
+                    var posX = user.userData.homePosition.x - 10+20*user.actors.length;
+                    var posY = user.userData.homePosition.y - 10+20*user.actors.length;
+                    var physics = {x:posX, y:posY, vx:0, vy:0, r:g_unit*0.4, timeToLive:-1}
 
-                    var actor = user.makeHeroActor(sector);
+                    var username = user.userData.username.substring(0, 3);
+                    var actor = this.createActor(user, username, physics, "A");
                     if( user.mainActor === null )
                     {
                         user.selectActor(actor);
                     }
-                    this.actors.push(actor);
-
-                    io.emit('s-addActorData', actor.actorData );
                 }
             }
             if(user.lastHeartbeat < new Date().getTime() - config.maxHeartbeatInterval) 
@@ -103,6 +103,49 @@ define(["server/KSectorSrv", "common/KUtil"],
                 }
             }
         }
+    }
+
+    KWorld.prototype.doPunch = function(heroActor, leftHand)
+    {
+        var uidx = KUtil.findUser(this.users, heroActor.actorData.userID);
+        var user = this.users[uidx];
+        var g_unit = 10;
+        var posX = heroActor.actorData.position.x;
+        var posY = heroActor.actorData.position.y;
+        console.log(posX+" "+posY);
+        var velX = 0;//heroActor.actorData.lastVelocity.x;
+        var velY = 0;//heroActor.actorData.lastVelocity.y;
+        var physics = {x:posX, y:posY, vx:velX, vy:velY, r:g_unit*0.1, momentum:0, timeToLive:10}
+        var username = user.userData.username.substring(0, 3)+'punch';
+        var punch = this.createActor(user, username, physics, "P");
+        console.log('punch');
+    }
+
+    KWorld.prototype.doShoot = function(heroActor, leftHand, chargeTime)
+    {
+        var uidx = KUtil.findUser(this.users, heroActor.actorData.userID);
+        var user = this.users[uidx];
+        var g_unit = 10;
+        var posX = heroActor.actorData.position.x;
+        var posY = heroActor.actorData.position.y;
+        console.log("P"+posX+" "+posY);
+        var velX = 0;//heroActor.actorData.lastVelocity.x*chargeTime;
+        var velY = 5;//heroActor.actorData.lastVelocity.y*chargeTime;
+        console.log("V"+velX+" "+velY+" "+chargeTime);
+        var physics = {x:posX, y:posY, vx:velX, vy:velY, r:g_unit*0.1, momentum:1, timeToLive:50}
+        var username = user.userData.username.substring(0, 3)+'shoot';
+        var shoot = this.createActor(user, username, physics, "S");
+        console.log('shoot');
+    }
+    KWorld.prototype.createActor = function(user, name, physics, visual)
+    {
+        var sector = this.getSectorRealPos(physics.x, physics.y);
+
+        var actor = user.makeActor(name, physics, sector, visual);
+        this.actors.push(actor);
+
+        this.io.emit('s-addActorData', actor.actorData );
+        return actor;
     }
 
 
@@ -118,6 +161,7 @@ define(["server/KSectorSrv", "common/KUtil"],
         });
         this.actors.forEach( function(actor)
         {
+            actor.beforeTurn();
             actor.momentumDesireMove(config);
             actor.inputDesireMove(config);
             actor.finishDesireMove(config);
@@ -131,6 +175,19 @@ define(["server/KSectorSrv", "common/KUtil"],
             actor.applyMove(config);
             actor.doAbilities(config, world);
         });
+        for(var i = this.actors.length-1; i >= 0; --i)
+        {
+            var actor = this.actors[i];
+            actor.afterTurn();
+            if( actor.actorData.actorState === "D")
+            {
+                var uidx = KUtil.findUser(this.users, actor.actorData.userID);
+                var user = this.users[uidx];
+                user.removeActor(actor.actorData)
+                this.io.emit('s-remActorData', actor.actorData );
+                this.actors.splice(i, 1);
+            }
+        }
         this.sectors.forEach( function(sectorRow)
         { 
             sectorRow.forEach( function(sector)
@@ -140,22 +197,7 @@ define(["server/KSectorSrv", "common/KUtil"],
         });
     }
 
-    KWorld.prototype.doPunch = function(heroActor, leftHand)
-    {
-        var uidx = KUtil.findUser(this.users, heroActor.actorData.userID);
-        var user = this.users[uidx];
-        var punch = user.makeItemActor(heroActor, {x:1, y:1})
-        console.log('punch');
-    }
-
-    KWorld.prototype.doShoot = function(heroActor, leftHand, chargeTime)
-    {
-        var uidx = KUtil.findUser(this.users, heroActor.actorData.userID);
-        var user = this.users[uidx];
-        var bullet = user.makeItemActor(heroActor, {x:1, y:1})
-        console.log('shoot');
-        console.log(chargeTime);
-    }
+    
 
     KWorld.prototype.getLine = function(seed, row)
     {

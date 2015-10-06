@@ -23,7 +23,33 @@ define(["common/KUserData","server/KActorSrv"],
         this.commandQueue = p_other.commandQueue;    
     }
 
-    KUserSrv.prototype.makeHeroActor = function(p_sector) {
+    KUserSrv.prototype.makeActor = function(p_name, p_physics, p_sector, p_visual) {    
+
+        var actorID = this.userData.userID+this.actors.length;
+        var actor = new KActorSrv(this.userData.userID, actorID, p_name+actorID, p_sector, p_visual);
+        actor.addCircle(p_physics.x, p_physics.y, p_physics.r);
+        actor.actorData.actorState = "A";
+        this.actors.push(actor.actorID);
+        this.userData.actorIDs.push(actor.actorID);
+        actor.actorData.timeToLive = p_physics.timeToLive;
+        actor.actorData.velocity.x = p_physics.vx;
+        actor.actorData.velocity.y = p_physics.vy;
+        return actor;
+    }
+
+    KUserSrv.prototype.removeActor = function(p_actorData)
+    {
+        for(var i = this.actors.Count; i >= 0; ++i)
+        {
+            var actor = this.actors[i];
+            if( actor.actorData.actorID === p_actorData.actorID)
+            {
+                this.actors.splice(i, 1);
+            }
+        }
+    }
+
+    /*KUserSrv.prototype.makeHeroActor = function(p_sector) {
         var userData = this.userData;
         var shortName = userData.username.substring(0, 3);
         var actorID = userData.userID+this.actors.length;
@@ -31,7 +57,7 @@ define(["common/KUserData","server/KActorSrv"],
         var posY = userData.homePosition.y - 10+20*this.actors.length;
 
         var circle = new SAT.Circle(new SAT.Vector(posX, posY), g_unit*0.4);
-        var actor = new KActorSrv(userData.userID, actorID, shortName+actorID, circle, p_sector);
+        var actor = new KActorSrv(userData.userID, actorID, shortName+actorID, circle, p_sector, "a");
         this.actors.push(actor.actorID);
         this.userData.actorIDs.push(actor.actorID);
         return actor;
@@ -44,14 +70,14 @@ define(["common/KUserData","server/KActorSrv"],
         this.nextActorID = (this.nextActorID + 1) % 10;
 
         var circle = new SAT.Circle(p_heroActor.circle.pos, g_unit*0.1);
-        var actor = new KActorSrv(userData.userID, actorID, shortName+actorID, circle, p_heroActor.sector);
+        var actor = new KActorSrv(userData.userID, actorID, shortName+actorID, circle, p_heroActor.sector, "p");
         actor.actorData.velocity.x = p_velocity.x;
         actor.actorData.velocity.y = p_velocity.y;
         actor.actorData.ttl = 1;
         this.actors.push(actor.actorID);
         this.userData.actorIDs.push(actor.actorID);
         return actor;
-    }
+    }*/
 
     KUserSrv.prototype.killActor = function(p_actor)
     {

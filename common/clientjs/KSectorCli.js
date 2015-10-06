@@ -36,7 +36,7 @@ define(["client/KActorCli"],
 				this.addElement(column, row, line[column]);
 			}
 		}
-		console.log('populated'+this.secX+','+this.secY);
+		//console.log('populated'+this.secX+','+this.secY);
 		this.isPopulated = true;
 	}
 
