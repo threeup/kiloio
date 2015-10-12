@@ -414,28 +414,33 @@ define(["client/KWorldCli", "client/KSectorCli", "client/KUserCli", "client/KAct
     {
       var localActorData = this.localUser.mainActor.actorData;
       var localInput = this.localUser.mainActor.inputData;
+      
       var lsx = g_joy.right - g_joy.left;
       var lsy = g_joy.up - g_joy.down;
-      var lslen = Math.sqrt(lsx*lsx + lsy*lsy);
+      var lslen = Math.max(0.05, Math.sqrt(lsx*lsx + lsy*lsy));
       if ( lslen > 0.1 )
       {
         localInput.lfx = lsx;
         localInput.lfy = lsy;
       }
       
-      localInput.lsx = lsx;
-      localInput.lsy = lsy;
+      localInput.lsx = lsx/lslen;
+      localInput.lsy = lsy/lslen;
+      localInput.lslen = lslen;
+
       var rsx = this.localCursor.position.x - localActorData.position.x;
       var rsy = this.localCursor.position.z - localActorData.position.y;
-      var rslensq = rsx*rsx+rsy*rsy;
-      if( rslensq > 0.1 )
+      var rslen = Math.max(0.05, Math.sqrt(rsx*rsx+rsy*rsy));
+      if( rslen > 0.1 )
       {
         localInput.rfx = rsx;
         localInput.rfy = rsy;
       }
-      var rslen = Math.min(1, Math.sqrt(rslensq) );
       localInput.rsx = rsx/rslen;
       localInput.rsy = rsy/rslen;
+      localInput.rslen = rslen;
+
+
       localInput.p = g_joy.primary;
       localInput.s = g_joy.secondary;
 

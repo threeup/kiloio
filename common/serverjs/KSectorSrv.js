@@ -41,10 +41,14 @@ define(["server/KWorld", "common/KUtil", "libjs/quadtree"],
         return {x:posX, y:posY};
     }
 
+    KSectorSrv.prototype.mod = function(n, m) {
+            return ((n % m) + m) % m;
+    }
+
     KSectorSrv.prototype.getGround = function(tile)
     {
-        var relTileX = (tile.x + this.sectorRadius) % this.sectorUnit;
-        var relTileY = (tile.y + this.sectorRadius) % this.sectorUnit;
+        var relTileX = this.mod(tile.x + this.sectorRadius, this.sectorUnit);
+        var relTileY = this.mod(tile.y + this.sectorRadius, this.sectorUnit);
         return this.groundList[relTileY][relTileX];
     }
 
@@ -52,8 +56,8 @@ define(["server/KWorld", "common/KUtil", "libjs/quadtree"],
 
     KSectorSrv.prototype.setGround = function(tile, val)
     {
-        var relTileX = (tile.x + this.sectorRadius) % this.sectorUnit;
-        var relTileY = (tile.y + this.sectorRadius) % this.sectorUnit;
+        var relTileX = this.mod(tile.x + this.sectorRadius, this.sectorUnit);
+        var relTileY = this.mod(tile.y + this.sectorRadius, this.sectorUnit);
         var line = KUtil.setCharAt(this.groundList[relTileY], relTileX, val);
         return this.groundList[relTileY] = line;
     }
@@ -157,6 +161,108 @@ define(["server/KWorld", "common/KUtil", "libjs/quadtree"],
             return;
         }
 
+       
+
+        var tileNE = this.world.getTile(moveActor.getRealCircle(1,1));
+        var tileSE = this.world.getTile(moveActor.getRealCircle(1,-1));
+        var tileSW = this.world.getTile(moveActor.getRealCircle(-1,-1));
+        var tileNW = this.world.getTile(moveActor.getRealCircle(-1,1));
+
+        var groundNE = this.getGround(tileNE) != ' ';
+        var groundSE = this.getGround(tileSE) != ' ';
+        var groundSW = this.getGround(tileSW) != ' ';
+        var groundNW = this.getGround(tileNW) != ' ';
+
+        if( !groundNE && !groundSE && !groundSW && !groundNW )
+        {
+            return;
+        }
+
+        var velX = moveActor.actorData.velocity.x; 
+        var hasVelX = Math.abs(velX) > 0.1;
+        var velY = moveActor.actorData.velocity.y;
+        var hasVelY = Math.abs(velY) > 0.1;
+
+        var stopX = false;
+        var slideN = false;
+        var slideS = false;
+        var stopY = false;
+        var slideE = false;
+        var slideW = false;
+
+        if( hasVelX )
+        {
+            if( groundSW && groundNW || groundSE && groundNE)
+            {
+                stopX = true;
+            }
+            else
+            {
+                slideN = velX < 0 && groundSW || velX > 0 && groundSE;
+                slideS = velX < 0 && groundNW || velX > 0 && groundNE;
+            }
+        }
+
+        if( hasVelY )
+        {
+            if( groundNE && groundNW || groundSE && groundSW)
+            {
+                stopY = true;
+            }
+            else
+            {
+                slideE = velY > 0 && groundNW || velY < 0 && groundSW;
+                slideW = velY > 0 && groundNE || velY < 0 && groundSE;
+            }
+        }
+
+        if( stopX || slideN || slideS )
+        {
+            moveActor.circle.pos.x = originPos.x;
+        }
+        else
+        {
+            if( slideE )
+            {
+                moveActor.circle.pos.x += Math.abs(velY);   
+            }
+            else if( slideW )
+            {
+                moveActor.circle.pos.x -= Math.abs(velY);
+            }
+        }
+
+        if( stopY || slideE || slideW )
+        {
+            moveActor.circle.pos.y = originPos.y;
+        }
+        else
+        {
+            if( slideN )
+            {
+                moveActor.circle.pos.y += Math.abs(velX);
+            }
+            else if( slideS )
+            {
+                moveActor.circle.pos.y -= Math.abs(velX);   
+            }
+        }
+
+
+    }
+
+    KSectorSrv.prototype.attemptMoveGroundOld = function(moveActor) 
+    {
+        var originPos = moveActor.actorData.position;
+        var originTile = this.world.getTile(originPos);
+        var nextPos = origi
+        var nextTile = this.world.getTile(originPos);
+        var groundOrigin = this.getGround(originTile);
+        if(groundOrigin != ' ')
+        {
+            return;
+        }
+
         var tileNE = this.world.getTile(moveActor.getRealCircle(1,1));
         var tileSE = this.world.getTile(moveActor.getRealCircle(1,-1));
         var tileSW = this.world.getTile(moveActor.getRealCircle(-1,-1));
@@ -167,8 +273,10 @@ define(["server/KWorld", "common/KUtil", "libjs/quadtree"],
         var groundSW = this.getGround(tileSW);
         var groundNW = this.getGround(tileNW);
 
-        var hasVelX = Math.abs(moveActor.actorData.velocity.x) > 0.1;
-        var hasVelY = Math.abs(moveActor.actorData.velocity.y) > 0.1;
+        var absVelX = Math.abs(moveActor.actorData.velocity.x);
+        var hasVelX = absVelX > 0.1;
+        var absVelY = Math.abs(moveActor.actorData.velocity.y);
+        var hasVelY = absVelY > 0.1;
         
         var stopCountY = 0;
         var stopCountX = 0;
@@ -176,21 +284,25 @@ define(["server/KWorld", "common/KUtil", "libjs/quadtree"],
         var slideCountX = 0;
         if( groundNE != ' ')
         {
+            console.log('NE');
             if( hasVelY && originTile.x == tileNE.x ) { stopCountY++; } else { slideCountX++; }
             if( hasVelX && originTile.y == tileNE.y ) { stopCountX++; } else { slideCountY++; }
         }
         if( groundSE != ' ')
         {
+            console.log('SE');
             if( hasVelY && originTile.x == tileSE.x ) { stopCountY++; } else { slideCountX++; }
             if( hasVelX && originTile.y == tileSE.y ) { stopCountX++; } else { slideCountY++; }
         }
         if( groundSW != ' ')
         {
+            console.log('SW');
             if( hasVelY && originTile.x == tileSW.x ) { stopCountY++; } else { slideCountX++; }
             if( hasVelX && originTile.y == tileSW.y ) { stopCountX++; } else { slideCountY++; }
         }
         if( groundNW != ' ')
         {
+            console.log('NW');
             if( hasVelY && originTile.x == tileNW.x ) { stopCountY++; } else { slideCountX++; }
             if( hasVelX && originTile.y == tileNW.y ) { stopCountX++; } else { slideCountY++; }
         }
@@ -203,7 +315,8 @@ define(["server/KWorld", "common/KUtil", "libjs/quadtree"],
         }
         else if( slideCountX >= 1)
         {
-            posX = this.world.getRealFromTilePos(originTile.x); 
+            var diffX = this.world.getRealFromTilePos(originTile.x) - posX;
+            posX += diffX*0.5; //absVelX + absVel+Y
         }
         if(stopCountY >= 1)
         {
@@ -211,9 +324,14 @@ define(["server/KWorld", "common/KUtil", "libjs/quadtree"],
         }
         else if( slideCountY >= 1)
         {
-            posY = this.world.getRealFromTilePos(originTile.y); 
+            var diffY = this.world.getRealFromTilePos(originTile.y) - posY;
+            posY += diffY*0.5; //absVelX + absVel+Y
         }
-        moveActor.collisionMoveTo(posX, posY);
+        if( stopCountX + stopCountY + slideCountX + slideCountY > 0)
+        {
+            console.log(stopCountX+' '+stopCountY+' slide'+slideCountX+' '+slideCountY+' has'+hasVelX+' '+hasVelY)
+            moveActor.collisionMoveTo(posX, posY);
+        }
     }
 
 

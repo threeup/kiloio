@@ -57,6 +57,10 @@ define(["common/KActorData","common/KInputData"],
         {
             this.addShoot();
         } 
+        this.torsobone.position.x = Math.round(this.actorData.position.x);
+        this.torsobone.position.z = Math.round(this.actorData.position.y);
+        this.hipsbone.position.x = Math.round(this.actorData.position.x);
+        this.hipsbone.position.z = Math.round(this.actorData.position.y);
     }
 
     KActorCli.prototype.addPunch = function()
@@ -191,8 +195,10 @@ define(["common/KActorData","common/KInputData"],
         {
             this.actorData.facingEngine.x = this.inputData.lsx;
             this.actorData.facingEngine.y = this.inputData.lsy;
+            this.actorData.facingEngine.len = this.inputData.lslen;
             this.actorData.facingHead.x = this.inputData.rsx;
             this.actorData.facingHead.y = this.inputData.rsy;
+            this.actorData.facingHead.len = this.inputData.rslen;
         }
         var yawTorso = Math.atan2(-this.actorData.facingHead.y, this.actorData.facingHead.x);
         var yawHips = Math.atan2(-this.actorData.facingEngine.y, this.actorData.facingEngine.x);

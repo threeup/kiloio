@@ -34,6 +34,8 @@ define(["common/KUserData","server/KActorSrv"],
         actor.actorData.timeToLive = p_physics.timeToLive;
         actor.actorData.velocity.x = p_physics.vx;
         actor.actorData.velocity.y = p_physics.vy;
+        
+        actor.actorData.momentum = p_physics.momentum;
         return actor;
     }
 

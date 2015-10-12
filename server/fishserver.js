@@ -10,9 +10,9 @@ requirejs.config({
     paths: {
         common: '../common/commonjs',
         server: '../common/serverjs',
-        libjs: '../common/serverlib',
-        text: '../common/serverlib/text',
-        json: '../common/serverlib/json'
+        libjs: '../lib/serverlib',
+        text: '../lib/serverlib/text',
+        json: '../lib/serverlib/json'
     },
 
     //Pass the top-level main.js/index.js require
@@ -40,6 +40,7 @@ var serverPort = 0;
 
 app.use(express.static(__dirname + '/../client'));
 app.use(express.static(__dirname + '/../common'));
+app.use(express.static(__dirname + '/../lib'));
 
 function gameStart(KWorld, KUserSrv, KUtil)
 {

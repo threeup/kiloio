@@ -7,8 +7,8 @@ define(function ()
         this.actorname = "-";
         this.position = { x: 0, y: 0 };
         this.velocity = { x: 0, y: 0 };
-        this.facingHead = { x: 0, y: 0 };
-        this.facingEngine = { x: 0, y: 0 };
+        this.facingHead = { x: 0, y: 0, len: 0 };
+        this.facingEngine = { x: 0, y: 0, len: 0 };
         this.lastVelocity = { x: 0, y: 0 };
         this.actorState = "I";//I nit, A live D ead
         this.speed = 0.4;

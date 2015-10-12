@@ -30,10 +30,12 @@ define(["common/KActorData","common/KInputData", "server/KSectorSrv"],
     
     KActorSrv.prototype.beforeTurn = function(config)
     {
-        this.actorData.facingHead.x = this.inputData.lsx;
-        this.actorData.facingHead.y = this.inputData.lsy;
-        this.actorData.facingEngine.x = this.inputData.rsx;
-        this.actorData.facingEngine.y = this.inputData.rsy;
+        this.actorData.facingHead.x = this.inputData.rsx;
+        this.actorData.facingHead.y = this.inputData.rsy;
+        this.actorData.facingHead.len = this.inputData.rslen;
+        this.actorData.facingEngine.x = this.inputData.lsx;
+        this.actorData.facingEngine.y = this.inputData.lsy;
+        this.actorData.facingEngine.len = this.inputData.lslen;
     }
     KActorSrv.prototype.afterTurn = function(config)
     {
@@ -42,7 +44,6 @@ define(["common/KActorData","common/KInputData", "server/KSectorSrv"],
             this.actorData.timeToLive--;
             if( this.actorData.timeToLive === 0 )
             {
-                console.log("dead");
                 this.actorData.actorState = "D";
             }
         }
@@ -113,7 +114,7 @@ define(["common/KActorData","common/KInputData", "server/KSectorSrv"],
     KActorSrv.prototype.collisionMoveTo = function(posX, posY) 
     {
         this.circle.pos.x = posX;
-        this.circle.pos.y = posY;        
+        this.circle.pos.y = posY;       
     }
 
     KActorSrv.prototype.collisionStop = function() 

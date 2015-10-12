@@ -83,7 +83,12 @@ define(["server/KSectorSrv", "common/KUtil"],
                     var g_unit = 10;
                     var posX = user.userData.homePosition.x - 10+20*user.actors.length;
                     var posY = user.userData.homePosition.y - 10+20*user.actors.length;
-                    var physics = {x:posX, y:posY, vx:0, vy:0, r:g_unit*0.4, timeToLive:-1}
+                    var physics = {
+                        x:posX, y:posY, 
+                        vx:0, vy:0, 
+                        momentum: 0.2,
+                        r:g_unit*0.4, 
+                        timeToLive:-1}
 
                     var username = user.userData.username.substring(0, 3);
                     var actor = this.createActor(user, username, physics, "A");
@@ -110,15 +115,20 @@ define(["server/KSectorSrv", "common/KUtil"],
         var uidx = KUtil.findUser(this.users, heroActor.actorData.userID);
         var user = this.users[uidx];
         var g_unit = 10;
-        var posX = heroActor.actorData.position.x;
-        var posY = heroActor.actorData.position.y;
-        console.log(posX+" "+posY);
-        var velX = 0;//heroActor.actorData.lastVelocity.x;
-        var velY = 0;//heroActor.actorData.lastVelocity.y;
-        var physics = {x:posX, y:posY, vx:velX, vy:velY, r:g_unit*0.1, momentum:0, timeToLive:10}
+        var facX = Math.round(heroActor.actorData.facingHead.x*10)/10;
+        var facY = Math.round(heroActor.actorData.facingHead.y*10)/10;
+        var posX = heroActor.actorData.position.x+facX;
+        var posY = heroActor.actorData.position.y+facY;
+        var velX = facX*0.1;
+        var velY = facY*0.1;
+        var physics = {
+            x:posX, y:posY, 
+            vx:velX, vy:velY, 
+            r:g_unit*0.1, 
+            momentum:0.2, 
+            timeToLive:10}
         var username = user.userData.username.substring(0, 3)+'punch';
         var punch = this.createActor(user, username, physics, "P");
-        console.log('punch');
     }
 
     KWorld.prototype.doShoot = function(heroActor, leftHand, chargeTime)
@@ -126,22 +136,25 @@ define(["server/KSectorSrv", "common/KUtil"],
         var uidx = KUtil.findUser(this.users, heroActor.actorData.userID);
         var user = this.users[uidx];
         var g_unit = 10;
-        var posX = heroActor.actorData.position.x;
-        var posY = heroActor.actorData.position.y;
-        console.log("P"+posX+" "+posY);
-        var velX = 0;//heroActor.actorData.lastVelocity.x*chargeTime;
-        var velY = 5;//heroActor.actorData.lastVelocity.y*chargeTime;
-        console.log("V"+velX+" "+velY+" "+chargeTime);
-        var physics = {x:posX, y:posY, vx:velX, vy:velY, r:g_unit*0.1, momentum:1, timeToLive:50}
+        var facX = Math.round(heroActor.actorData.facingHead.x*10)/10;
+        var facY = Math.round(heroActor.actorData.facingHead.y*10)/10;
+        var posX = heroActor.actorData.position.x+facX;
+        var posY = heroActor.actorData.position.y+facY;
+        var velX = facX*(Math.min(6, chargeTime)+4);
+        var velY = facY*(Math.min(6, chargeTime)+4);
+        var physics = {
+            x:posX, y:posY, 
+            vx:velX, vy:velY, 
+            r:g_unit*0.1, 
+            momentum:1, 
+            timeToLive:50}
         var username = user.userData.username.substring(0, 3)+'shoot';
         var shoot = this.createActor(user, username, physics, "S");
-        console.log('shoot');
     }
-    KWorld.prototype.createActor = function(user, name, physics, visual)
+    KWorld.prototype.createActor = function(p_user, p_name, p_physics, p_visual)
     {
-        var sector = this.getSectorRealPos(physics.x, physics.y);
-
-        var actor = user.makeActor(name, physics, sector, visual);
+        var sector = this.getSectorRealPos(p_physics.x, p_physics.y);
+        var actor = p_user.makeActor(p_name, p_physics, sector, p_visual);
         this.actors.push(actor);
 
         this.io.emit('s-addActorData', actor.actorData );
